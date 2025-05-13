@@ -1,4 +1,5 @@
 import Header from '../components/header';
+import AboutText from '../components/about';
 
 export default function Home() {
   return (
@@ -43,18 +44,18 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="text-3xl font-bold -mt-20">
+            <h1 className="text-3xl font-bold -mt-25">
               hello, i'm <span style={{ color: '#a67c52', opacity: 0.6 }}>sutharsika kumar</span>
             </h1>
           </div>
           <div className="-mt-25 ml-35 text-gray-700">
-            {/* Upcoming */}
+
             <div className="mb-4">
               <h2 className="text-lg font-semibold mb-2">Upcoming</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <span className="font-semibold">Software Engineering Intern – Google</span><br />
-                  <span className="text-sm">Joining the AI Research division in Summer 2025</span><br />
+                  <span className="font-semibold">Software Engineering Intern – GridClarity</span><br />
+                  <span className="text-sm">Innovative applications</span><br />
                   <span className="text-xs text-gray-500">Jun 2025 – Aug 2025</span>
                 </li>
               </ul>
@@ -64,14 +65,9 @@ export default function Home() {
               <h2 className="text-lg font-semibold mb-2">Present</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <span className="font-semibold">Research Assistant – Duke University</span><br />
-                  <span className="text-sm">Developed AI-based segmentation pipeline for microscopic imaging</span><br />
+                  <span className="font-semibold">Undergraduate Researcher – Duke University</span><br />
+                  <span className="text-sm">Developed AI-based segmentation pipeline for microscopic imaging of nanomaterials</span><br />
                   <span className="text-xs text-gray-500">May 2024 – Present</span>
-                </li>
-                <li>
-                  <span className="font-semibold">Founder – LLM Club @ UNC</span><br />
-                  <span className="text-sm">Taught peer-led workshops on generative AI, hosted speaker sessions, built open-source tools</span><br />
-                  <span className="text-xs text-gray-500">Jan 2024 – Present</span>
                 </li>
               </ul>
             </div>
@@ -80,7 +76,14 @@ export default function Home() {
               <h2 className="text-lg font-semibold mb-2">Past</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <span className="font-semibold">Software Developer – HackHarvard Winner</span><br />
+                  <span className="font-semibold">PennApps XXV Winner</span><br />
+                  <span className="text-sm">Built disaster relief resource allocation app using weather and socioeconomic data</span><br />
+                  <span className="text-xs text-gray-500">Sept 2024</span>
+                </li>
+              </ul>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <span className="font-semibold">HackHarvard Participant</span><br />
                   <span className="text-sm">Built disaster relief resource allocation app using weather and socioeconomic data</span><br />
                   <span className="text-xs text-gray-500">Oct 2024</span>
                 </li>
