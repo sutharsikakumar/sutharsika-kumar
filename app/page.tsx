@@ -60,7 +60,7 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="ml-4 text-3xl font-bold -mt-6 font-inter">
+            <h1 className="ml-4 text-3xl font-bold -mt-9 font-inter">
               <span className="mr-2">Hello, I&apos;m</span>
               <span className="text-[#3a829c] opacity-60">
                 <Typewriter
@@ -121,7 +121,7 @@ export default function Home() {
 
         <AboutText
           title="About Me"
-          content={`I am a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I didn&apos;t enjoy it. It wasn&apos;t until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I&apos;ve contributed to research in machine intelligence and computational physics, and hope to build tools that people actually find value in.`}
+          content={`I am a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I did not enjoy it. It was not until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I have contributed to research in machine intelligence and computational physics, and hope to build tools that people actually find value in.`}
         />
         <AboutText
           title="Projects"
