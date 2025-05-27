@@ -60,7 +60,7 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="ml-4 text-3xl font-bold -mt-9 font-inter">
+            <h1 className="ml-4 text-3xl font-bold -mt-15 font-inter">
               <span className="mr-2">Hello, I&apos;m</span>
               <span className="text-[#3a829c] opacity-60">
                 <Typewriter
