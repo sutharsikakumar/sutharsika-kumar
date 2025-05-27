@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <Header />
       <main className="p-8">
-        <div style={{ marginLeft: '1cm' }}>
+        <div className="ml-32">
           <div className="flex items-center space-x-6">
             <div className="flex flex-col items-center">
               <Image
@@ -20,6 +20,7 @@ export default function Home() {
                 width={96}
                 height={96}
                 className="rounded-full object-cover"
+                priority
               />
 
               <div className="mt-5">
@@ -27,6 +28,7 @@ export default function Home() {
                   href="https://www.linkedin.com/in/sutharsikakumar/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="LinkedIn Profile"
                 >
                   <Image
                     src="/linkedin.png"
@@ -34,6 +36,7 @@ export default function Home() {
                     width={40}
                     height={40}
                     className="hover:opacity-60 transition"
+                    loading="lazy"
                   />
                 </a>
               </div>
@@ -43,6 +46,7 @@ export default function Home() {
                   href="https://github.com/sutharsikakumar"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="GitHub Profile"
                 >
                   <Image
                     src="/github.svg"
@@ -50,14 +54,15 @@ export default function Home() {
                     width={24}
                     height={24}
                     className="hover:opacity-60 transition"
+                    loading="lazy"
                   />
                 </a>
               </div>
             </div>
 
-            <h1 className="ml-4 text-3xl font-bold -mt-25 font-inter">
+            <h1 className="ml-4 text-3xl font-bold -mt-6 font-inter">
               <span className="mr-2">Hello, I&apos;m</span>
-              <span style={{ color: '#3a829c', opacity: 0.6 }}>
+              <span className="text-[#3a829c] opacity-60">
                 <Typewriter
                   words={['Sutharsika Kumar']}
                   loop={false}
@@ -71,7 +76,7 @@ export default function Home() {
             </h1>
           </div>
 
-          <div className="-mt-25 ml-35 text-gray-700 font-inter">
+          <div className="-mt-12 ml-36 text-gray-700 font-inter">
             <div className="mb-4 font-inter">
               <h2 className="text-lg font-semibold mb-2 font-inter">Upcoming</h2>
               <ul className="list-disc pl-5 space-y-2">
@@ -116,7 +121,7 @@ export default function Home() {
 
         <AboutText
           title="About Me"
-          content={`I&apos;m a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I didn't enjoy it. It wasn't until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I've contributed to research in machine intelligence and computational physics, and hope to build tools that people actually find value in.`}
+          content={`I am a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I didn&apos;t enjoy it. It wasn&apos;t until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I&apos;ve contributed to research in machine intelligence and computational physics, and hope to build tools that people actually find value in.`}
         />
         <AboutText
           title="Projects"
@@ -128,7 +133,7 @@ export default function Home() {
           }
         />
 
-        <div className="flex gap-x-6 mt-4 ml-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 ml-20">
           <HobbyCard
             title="Token Optimizer"
             description="Web extension to optimize token usage for large-language model prompts"
@@ -151,7 +156,7 @@ export default function Home() {
           content={`In my free time, I enjoy cafe-hopping, dancing, and traveling/exploring.`}
         />
 
-        <div className="flex gap-x-6 mt-4 ml-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 ml-20">
           <HobbyCard
             title="Cafe Hopping"
             description="Enjoying the ambience of a new cafe with a unique coffee/matcha in hand never gets boring!"
