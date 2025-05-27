@@ -48,7 +48,7 @@ export default function Home() {
               </div>
             </div>
 
-            <h1 className="ml-4 text-3xl font-bold -mt-25 font-[Inter]">
+            <h1 className="ml-4 text-3xl font-bold -mt-25 font-inter">
             <span className="mr-2">Hello, I'm</span>
             <span style={{ color: '#3a829c', opacity: 0.6 }}>
             <Typewriter
@@ -63,10 +63,10 @@ export default function Home() {
             </span>
           </h1>
           </div>
-          <div className="-mt-25 ml-35 text-gray-700 font-[Inter]">
+          <div className="-mt-25 ml-35 text-gray-700 font-inter">
 
-            <div className="mb-4 font-[Inter]">
-              <h2 className="text-lg font-semibold mb-2 font-[Inter]">Upcoming</h2>
+            <div className="mb-4 font-inter">
+              <h2 className="text-lg font-semibold mb-2 font-inter">Upcoming</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
                   <span className="font-semibold">Engineering Intern – GridClarity</span><br />
@@ -76,8 +76,8 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="mb-4 font-[Inter]">
-              <h2 className="text-lg font-semibold mb-2 font-[Inter]">Present</h2>
+            <div className="mb-4 font-inter">
+              <h2 className="text-lg font-semibold mb-2 font-inter">Present</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
                   <span className="font-semibold">Undergraduate Researcher – Duke University</span><br />
@@ -88,7 +88,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold mb-2 font-[Inter]">Past</h2>
+              <h2 className="text-lg font-semibold mb-2 font-inter">Past</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
                   <span className="font-semibold">PennApps XXV Winner</span><br />
@@ -96,7 +96,7 @@ export default function Home() {
                   <span className="text-xs text-gray-500">Sept 2024</span>
                 </li>
               </ul>
-              <ul className="list-disc pl-5 space-y-2 font-[Inter]">
+              <ul className="list-disc pl-5 space-y-2 font-inter">
                 <li>
                   <span className="font-semibold">HackHarvard Participant</span><br />
                   <span className="text-sm">Built a disaster relief resource allocation app using weather and socioeconomic data</span><br />
