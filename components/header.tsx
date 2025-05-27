@@ -8,7 +8,7 @@ const Header: React.FC = () => {
         <Link href="/"><span style={{ color: '#3a829c', opacity: 0.6 }}>SK</span></Link>
       </div>
       <nav className="space-x-6 text-sm font-medium">
-        <Link href="/home" className="hover:text-blue-600 transition">Home</Link>
+        <Link href="/" className="hover:text-blue-600 transition">Home</Link>
         <Link href="/projects" className="hover:text-blue-600 transition">Projects</Link>
         <Link href="/research" className="hover:text-blue-600 transition">Research</Link>
         <Link href="/art" className="hover:text-blue-600 transition">Art</Link>

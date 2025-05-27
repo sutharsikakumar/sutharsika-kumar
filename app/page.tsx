@@ -1,6 +1,4 @@
 'use client';
-
-
 import Header from '../components/header';
 import AboutText from '../components/about';
 import Footer from '../components/footer';
@@ -23,7 +21,7 @@ export default function Home() {
 
               <div className="mt-5">
                 <a
-                  href="https://www.linkedin.com/in/sutharsika-kumar-9b89401b5/"
+                  href="https://www.linkedin.com/in/sutharsikakumar/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -71,7 +69,7 @@ export default function Home() {
               <h2 className="text-lg font-semibold mb-2 font-[Inter]">Upcoming</h2>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <span className="font-semibold">Software Engineering Intern – GridClarity</span><br />
+                  <span className="font-semibold">Engineering Intern – GridClarity</span><br />
                   <span className="text-sm">Coming soon</span><br />
                   <span className="text-xs text-gray-500">Jun 2025 – Aug 2025</span>
                 </li>
@@ -110,8 +108,35 @@ export default function Home() {
         </div>
         <AboutText
         title="About Me"
-        content={`I'm a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I didn't enjoy it. It wasn't until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I've contributed to research in machine intelligence and computational physics, and hope to build tools that bring real value to my community.`}
+        content={`I'm a Computer Science and Statistics student at UNC Chapel Hill. My first introduction to building was in high school when I took AP Computer Science A, and to say the very least, I didn't enjoy it. It wasn't until college that I realized the kind of impact I could make with computer science. If I saw a problem, more often than not, there was a solution waiting to be built, and CS became an integral part of that process. Since then, I've contributed to research in machine intelligence and computational physics, and hope to build tools that people actually find value in.`}
         />
+        <AboutText
+        title="Projects"
+        content={
+        <>
+        I love building just for the fun of it! For a full list of projects, check out my{' '}
+        <a href="/projects" className="text-blue-500 underline">projects page.</a>
+        </>
+        }
+        />
+
+        <div className="flex gap-x-6 mt-4 ml-20">
+        <HobbyCard
+          title="Token Optimizer"
+          description="Web extension to optimize token usage for large-language model prompts"
+          imageUrl="/tokenoptimizer.jpg"
+          />
+        <HobbyCard
+          title="baXter"
+          description="Speech trainer with real-time feedback and AI-powered transcription and slide generation."
+          imageUrl="/presenter.png"
+          />
+           <HobbyCard
+          title="Dog Adoption"
+          description="A website that performs CRUD operations and uses dynamic routing to display dog breeds for adoption."
+          imageUrl="/dogadoption.jpg"
+          />
+        </div>
         <AboutText
         title="Hobbies"
         content={`In my free time, I enjoy cafe-hopping, dancing, and traveling/exploring.`}
