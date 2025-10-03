@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import { useRef, useEffect, forwardRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, wrapEffect } from '@react-three/postprocessing';
@@ -86,13 +85,15 @@ void main() {
   uv -= 0.5;
   uv.x *= resolution.x / resolution.y;
   float f = pattern(uv);
+  
   if (enableMouseInteraction == 1) {
     vec2 mouseNDC = (mousePos / resolution - 0.5) * vec2(1.0, -1.0);
     mouseNDC.x *= resolution.x / resolution.y;
     float dist = length(uv - mouseNDC);
-    float effect = 1.0 - smoothstep(0.0, mouseRadius, dist);
-    f -= 0.5 * effect;
+    float effect = smoothstep(mouseRadius, 0.0, dist);
+    f *= (1.0 - effect * 0.95);
   }
+  
   vec3 col = mix(vec3(0.0), waveColor, f);
   gl_FragColor = vec4(col, 1.0);
 }
