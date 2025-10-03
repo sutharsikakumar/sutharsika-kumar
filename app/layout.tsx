@@ -1,25 +1,19 @@
-import './globals.css';
-import { Epilogue } from 'next/font/google';
+import type { Metadata } from "next";
+import "./globals.css";
 
-const epilogue = Epilogue({
-  subsets: ['latin'],
-  variable: '--font-epilogue',
-  display: 'swap',
-});
-
-export const metadata = {
-  title: 'Sutharsika Kumar',
-  description: 'Portfolio',
+export const metadata: Metadata = {
+  title: "Sutharsika Kumar",
+  description: "Personal portfolio and selected works",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className={epilogue.variable}>
-      <body className="font-sans">{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
