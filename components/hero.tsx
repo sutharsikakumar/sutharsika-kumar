@@ -17,9 +17,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-black py-20 px-[50px] min-h-screen flex items-center">
+    <section className="bg-black py-20 px-[200px] min-h-screen flex items-center">
       <div className="flex items-center justify-center w-full">
-        <div className="relative w-full max-w-6xl h-[600px] border border-white">
+        <div className="relative w-full max-w-6xl h-[600px]">
           <div className="absolute inset-0 w-full h-full">
             <Dither
               waveColor={[0.5, 0.5, 0.5]}
