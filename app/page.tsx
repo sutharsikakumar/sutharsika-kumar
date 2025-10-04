@@ -8,62 +8,39 @@ export default function Home() {
     {
       number: "01",
       title: "Your current main focus",
-      description:
-        "Add your current work, research, or studies here. What's the most important problem you're working on?",
-    },
-    {
-      number: "02",
-      title: "Secondary focus",
-      description: "Another project or area of work",
+      description: "Add your current work, research, or studies here.",
     },
   ];
 
   const pastLifeData = [
     {
       number: "01",
-      title: "Previous role or achievement",
-      description:
-        "Description of your past work, backed by companies or institutions",
-    },
-    {
-      number: "02",
-      title: "Another milestone",
-      description: "Awards, recognition, or significant projects",
+      title: "Previous role",
+      description: "Description of your past work.",
     },
   ];
 
-  const writingData = [
+  const futureDirectionData = [
     {
       number: "01",
-      title: "Article or Essay Title",
-      description: "Brief description of what this piece is about",
-      publication: "Publication Name (Year)",
-    },
-    {
-      number: "02",
-      title: "Another Piece",
-      description: "Description of this work",
-      publication: "Publication (Year)",
+      title: "Future goal",
+      description: "What problems do you want to solve?",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-black">
-      <Header />
-
+    <div className="min-h-screen bg-black text-white">
       <main>
-        {/* Hero section with dither effect */}
         <Hero />
-
-        {/* Content sections below - scroll down to see these */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mt-32 pb-20">
-          <ContentSection title="CURRENT WORK" items={currentWorkData} />
-          <ContentSection title="PAST LIFE" items={pastLifeData} />
-          <ContentSection title="SELECTED WRITING" items={writingData} />
+        
+        <div className="max-w-7xl mx-auto px-8 py-20">
+          <div className="grid grid-cols-3 gap-16">
+            <ContentSection title="CURRENT WORK" items={currentWorkData} />
+            <ContentSection title="PAST LIFE" items={pastLifeData} />
+            <ContentSection title="FUTURE DIRECTION" items={futureDirectionData} />
+          </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
