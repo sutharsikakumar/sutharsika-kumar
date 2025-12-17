@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
+  --background-dark: #0a0a0a;
+  --foreground-dark: #ffffff;
   --accent: #666666;
 }
 
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -18,13 +19,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ✅ DOCUMENT DEFAULT = LIGHT */
 body {
   line-height: 1.6;
   background: white;
   color: #0a0a0a;
 }
 
-/* Font utilities (driven by next/font variables) */
+/* Fonts */
 .font-serif {
   font-family: var(--font-bentham), serif;
 }
@@ -37,7 +39,13 @@ body {
   font-family: var(--font-mono), monospace;
 }
 
-/* 🔒 CRITICAL FIX: disable browser link colors */
+/* Dark section utility (IMPORTANT) */
+.dark-section {
+  background: var(--background-dark);
+  color: var(--foreground-dark);
+}
+
+/* Links */
 a,
 a:visited {
   color: inherit;
@@ -45,6 +53,7 @@ a:visited {
   transition: opacity 0.3s ease;
 }
 
+/* Motion */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -58,17 +67,7 @@ a:visited {
   }
 }
 
-.arrow-link::after {
-  content: '↗';
-  margin-left: 4px;
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.arrow-link:hover::after {
-  transform: translate(2px, -2px);
-}
-
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -83,5 +82,5 @@ a:visited {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground);
+  background: #0a0a0a;
 }

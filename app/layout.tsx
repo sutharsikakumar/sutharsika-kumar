@@ -1,9 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  Bentham,
-  Space_Mono,
-  Crimson_Pro,
-} from 'next/font/google';
+import { Bentham, Space_Mono, Crimson_Pro } from 'next/font/google';
 import './globals.css';
 
 const bentham = Bentham({
@@ -40,7 +36,8 @@ export default function RootLayout({
       lang="en"
       className={`${bentham.variable} ${spaceMono.variable} ${crimson.variable}`}
     >
-      <body className="font-mono">
+      {/* ✅ Serif by default */}
+      <body className="font-serif">
         {children}
       </body>
     </html>
