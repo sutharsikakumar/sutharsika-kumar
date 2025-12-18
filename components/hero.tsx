@@ -28,25 +28,11 @@ export default function Hero() {
   return (
     <section className="dark-section min-h-screen flex items-center py-20 relative overflow-hidden">
 
-      {/* FULL-BLEED DITHER ATMOSPHERE */}
-      <div className="absolute inset-0 z-0">
-        <Dither
-          waveColor={[0.5, 0.5, 0.5]}
-          enableMouseInteraction
-          mouseRadius={0.3}
-          colorNum={4}
-          waveAmplitude={0.3}
-          waveFrequency={3}
-          waveSpeed={0.09}
-          pixelSize={1}
-        />
-      </div>
 
-      {/* CONTENT LAYER */}
       <div className="relative z-10 flex items-center justify-center w-full px-[200px]">
         <div className="relative w-full max-w-6xl">
 
-          {/* NAVIGATION (LEFT RAIL) */}
+
           <nav className="mb-6 max-w-6xl text-left uppercase tracking-widest text-sm md:text-base lg:text-lg font-mono text-white">
             <Link href="/current-work" className="hover:opacity-70">
               CURRENT WORK
@@ -57,7 +43,7 @@ export default function Hero() {
               onClick={(e) => handleScroll(e, 'past-life')}
               className="hover:opacity-70"
             >
-              PAST LIFE
+              PAST
             </a>{' '}
             •{' '}
             <a
@@ -85,12 +71,26 @@ export default function Hero() {
             </a>
           </nav>
 
-          {/* HERO COMPOSITION WINDOW */}
-          <div className="relative w-full h-[600px]">
+       
+          <div className="relative w-full h-[600px] overflow-hidden">
 
-            {/* NAME */}
+            
+            <div className="absolute inset-0 z-0">
+              <Dither
+                waveColor={[0.5, 0.5, 0.5]}
+                enableMouseInteraction
+                mouseRadius={0.3}
+                colorNum={4}
+                waveAmplitude={0.3}
+                waveFrequency={3}
+                waveSpeed={0.09}
+                pixelSize={1}
+              />
+            </div>
+
+
             <div
-              className={`relative flex items-center justify-center h-full transition-all duration-1000 ${
+              className={`relative z-10 flex items-center justify-center h-full transition-all duration-1000 ${
                 isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
@@ -112,7 +112,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* SOCIAL LINKS (RIGHT RAIL) */}
+      
           <div className="mt-6 max-w-6xl ml-auto text-right tracking-widest text-sm md:text-base lg:text-lg uppercase font-mono text-white">
             <a
               href="https://twitter.com/sutharsikakumar"
