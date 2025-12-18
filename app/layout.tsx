@@ -36,7 +36,7 @@ export default function RootLayout({
       lang="en"
       className={`${bentham.variable} ${spaceMono.variable} ${crimson.variable}`}
     >
-      {/* ✅ Serif by default */}
+
       <body className="font-serif">
         {children}
       </body>
