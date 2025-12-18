@@ -63,8 +63,8 @@ export default function Hero() {
                 colorNum={4}
                 waveAmplitude={0.3}
                 waveFrequency={3}
-                waveSpeed={0.1}
-                pixelSize={2}
+                waveSpeed={0.09}
+                pixelSize={1}
               />
             </div>
 
@@ -79,7 +79,7 @@ export default function Hero() {
                 style={{ fontSize: 'clamp(3rem, 8vw, 4rem)' }}
               >
                 <span>Sutharsika</span>
-                <Image src="/star.png" alt="star" width={12} height={12} />
+                <Image src="/star.png" alt="star" width={100} height={100} />
                 <span>Kumar</span>
               </h1>
             </div>
