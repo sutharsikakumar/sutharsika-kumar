@@ -304,11 +304,32 @@ export default function Dither({
   mouseRadius = 1
 }: DitherProps) {
   return (
-    <Canvas
-      className="dither-container"
-      camera={{ position: [0, 0, 6] }}
-      gl={{ antialias: false }}
-    >
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden'
+    }}>
+      <Canvas
+        camera={{ position: [0, 0, 6], fov: 50 }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          background: 'transparent'
+        }}
+        gl={{
+          antialias: false,
+          alpha: true
+        }}
+      >
       <DitheredWaves
         waveSpeed={waveSpeed}
         waveFrequency={waveFrequency}
@@ -321,5 +342,6 @@ export default function Dither({
         mouseRadius={mouseRadius}
       />
     </Canvas>
+    </div>
   );
 }

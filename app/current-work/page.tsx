@@ -1,84 +1,82 @@
 'use client';
 
+import Header from '../../components/header';
+
 export default function CurrentWorkPage() {
   return (
-    <main className="w-full bg-white">
+    <main className="w-full min-h-screen bg-white">
+      <Header title="Current Work" subtitle="Ongoing research, systems, and creative work." />
 
-      {/* BLACK MASTHEAD */}
-      <header className="bg-black border-b border-neutral-800">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 py-20">
-          <h1 className="text-white font-editorial italic tracking-tight text-5xl md:text-6xl">
-            Current Work
-          </h1>
-          <p className="mt-4 text-neutral-400 text-base tracking-wide font-serif">
-            Ongoing research, systems, and creative work.
-          </p>
-        </div>
-      </header>
-
-      {/* WHITE DOCUMENT BODY */}
-      <section>
-        <div className="max-w-6xl mx-auto px-8 md:px-16 lg:px-24 py-32 space-y-32">
-
-          {/* ITEM 1 */}
-          <article className="space-y-10">
-            <h2 className="font-editorial italic tracking-tight text-3xl md:text-4xl">
+      {/* CONTENT */}
+      <div className="w-full max-w-[calc(100%-6rem)] mx-auto px-12 py-12">
+        <div className="w-full max-w-[1200px] mx-auto">
+        {/* ITEM 1 */}
+        <div className="w-full flex flex-row mb-24">
+          {/* IMAGE COLUMN - FORCED LEFT */}
+          <div className="w-1/2 pr-20">
+            <div className="bg-gray-100 h-80 rounded-lg flex items-center justify-center">
+              <span className="text-gray-400">Project Image</span>
+            </div>
+          </div>
+          
+          {/* TEXT COLUMN */}
+          <div className="w-1/2 pl-20 pr-40">
+            <h2 className="text-2xl font-bold mb-4 font-bentham">
               Autonomous Spectral Analysis with Foundation Models
             </h2>
-
-            <p className="max-w-4xl text-neutral-700 leading-[1.8] text-lg">
+            <p className="text-gray-700 mb-16 leading-snug font-mono text-xs tracking-tight">
               A universal benchmarking framework evaluating large language and
               multimodal models on spectroscopic interpretation tasks across
               Raman, UV–Vis, and diffraction modalities.
             </p>
+          </div>
+        </div>
 
-            <div className="flex flex-wrap gap-x-10 gap-y-3 text-xs tracking-[0.25em] uppercase text-neutral-500">
-              <span>Research</span>
-              <span>Machine Learning</span>
-              <span>Materials Science</span>
+        {/* ITEM 2 */}
+        <div className="flex flex-row mb-32">
+          {/* IMAGE COLUMN - FORCED LEFT */}
+          <div className="w-1/2 pr-20">
+            <div className="bg-gray-100 h-80 rounded-lg flex items-center justify-center">
+              <span className="text-gray-400">Project Image</span>
             </div>
-          </article>
-
-          {/* ITEM 2 */}
-          <article className="space-y-10">
-            <h2 className="font-editorial italic tracking-tight text-3xl md:text-4xl">
+          </div>
+          
+          {/* TEXT COLUMN */}
+          <div className="w-1/2 pl-20 pr-40">
+            <h2 className="text-2xl font-bold mb-4 font-bentham">
               Multimodal Models for Scientific Discovery
             </h2>
-
-            <p className="max-w-4xl text-neutral-700 leading-[1.8] text-lg">
+            <p className="text-gray-700 mb-16 leading-snug font-mono text-xs tracking-tight">
               Exploring vision–language models that reason over figures,
               experimental data, and scientific context without task-specific
               retraining.
             </p>
+          </div>
+        </div>
 
-            <div className="flex flex-wrap gap-x-10 gap-y-3 text-xs tracking-[0.25em] uppercase text-neutral-500">
-              <span>Multimodal AI</span>
-              <span>Evaluation</span>
-              <span>Benchmarking</span>
+        {/* ITEM 3 */}
+        <div className="flex flex-row">
+          {/* IMAGE COLUMN - FORCED LEFT */}
+          <div className="w-1/2 pr-20">
+            <div className="bg-gray-100 h-80 rounded-lg flex items-center justify-center">
+              <span className="text-gray-400">Project Image</span>
             </div>
-          </article>
-
-          {/* ITEM 3 */}
-          <article className="space-y-10">
-            <h2 className="font-editorial italic tracking-tight text-3xl md:text-4xl">
+          </div>
+          
+          {/* TEXT COLUMN */}
+          <div className="w-1/2 pl-20 pr-40">
+            <h2 className="text-2xl font-bold mb-4 font-bentham normal-case">
               Creative Computing & Performance
             </h2>
-
-            <p className="max-w-4xl text-neutral-700 leading-[1.8] text-lg">
+            <p className="text-gray-700 mb-16 leading-snug font-mono text-xs tracking-tight">
               Computational and performative explorations examining abstraction,
               identity, and embodied systems.
             </p>
-
-            <div className="flex flex-wrap gap-x-10 gap-y-3 text-xs tracking-[0.25em] uppercase text-neutral-500">
-              <span>Art</span>
-              <span>Dance</span>
-              <span>Generative Systems</span>
-            </div>
-          </article>
-
+          </div>
         </div>
-      </section>
+
+      </div>
+    </div>
     </main>
   );
 }
-

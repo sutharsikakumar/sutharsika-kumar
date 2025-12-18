@@ -83,7 +83,7 @@ export default function Hero() {
                 colorNum={4}
                 waveAmplitude={0.3}
                 waveFrequency={3}
-                waveSpeed={0.09}
+                waveSpeed={0.07}
                 pixelSize={1}
               />
             </div>
