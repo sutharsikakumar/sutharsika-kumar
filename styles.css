@@ -1,5 +1,5 @@
 :root {
-  --color-bg:         #ece7dc;
+  --color-bg:         #f9f8f6;
   --color-text:       #1a1a18;  
   --color-text-muted: #6b6b62;  
   --color-link:       #2d5f8a;  
@@ -260,9 +260,6 @@ pre code {
   padding: var(--space-md) 0;
 }
 
-.pub-entry:last-child {
-}
-
 .pub-title {
   font-weight: 500;
   margin-bottom: 0.25rem;
@@ -311,25 +308,28 @@ pre code {
 .post-list-item {
   display: flex;
   align-items: baseline;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   padding: var(--space-sm) 0;
 }
 
-.post-list-item:last-child {
+.post-list-item::before {
+  content: '•';
+  flex-shrink: 0;
+  color: var(--color-text);
+}
+
+.post-title-link {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .post-date {
   flex-shrink: 0;
-  width: 9rem;
   color: var(--color-text-muted);
   font-size: 0.9rem;
-
   font-variant-numeric: tabular-nums;
-}
-
-.post-title-link {
-  font-size: 1rem;
-  font-weight: 500;
+  text-align: right;
 }
 
 
