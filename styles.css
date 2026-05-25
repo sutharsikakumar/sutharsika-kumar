@@ -424,3 +424,12 @@ pre code {
   }
 
 }
+
+.blog-post {
+  font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+}
+
+.blog-post a:hover,
+.blog-post a:focus {
+  border-bottom-color: transparent;
+}
