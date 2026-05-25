@@ -1,5 +1,5 @@
 :root {
-  --color-bg:         #f7f6f3;  
+  --color-bg:         #ece7dc;
   --color-text:       #1a1a18;  
   --color-text-muted: #6b6b62;  
   --color-link:       #2d5f8a;  
@@ -177,7 +177,6 @@ pre code {
 .site-footer {
   padding-top: var(--space-lg);
   padding-bottom: var(--space-xl);
-  border-top: 1px solid var(--color-rule);
   color: var(--color-text-muted);
   font-size: 1rem;
 }
@@ -259,11 +258,9 @@ pre code {
 
 .pub-entry {
   padding: var(--space-md) 0;
-  border-top: 1px solid var(--color-rule);
 }
 
 .pub-entry:last-child {
-  border-bottom: 1px solid var(--color-rule);
 }
 
 .pub-title {
@@ -316,11 +313,9 @@ pre code {
   align-items: baseline;
   gap: var(--space-md);
   padding: var(--space-sm) 0;
-  border-top: 1px solid var(--color-rule);
 }
 
 .post-list-item:last-child {
-  border-bottom: 1px solid var(--color-rule);
 }
 
 .post-date {
@@ -397,7 +392,6 @@ pre code {
   gap: var(--space-md);
   margin-top: var(--space-xl);
   padding-top: var(--space-md);
-  border-top: 1px solid var(--color-rule);
   font-size: 0.9rem;
   color: var(--color-text-muted);
 }
