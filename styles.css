@@ -2,8 +2,9 @@
   --color-bg:         #f9f8f6;
   --color-text:       #1a1a18;  
   --color-text-muted: #6b6b62;  
-  --color-link:       #2d5f8a;  
-  --color-link-hover: #1a3f60;  
+  --color-link:       #2d5f8a;
+  --color-link-hover: #8ACBD0;
+  --color-accent:     #8ACBD0;
   --color-rule:       #d9d7cf;  
 
   --font-serif:       'Albert Sans', system-ui, sans-serif;
@@ -315,13 +316,19 @@ pre code {
 .post-list-item::before {
   content: '•';
   flex-shrink: 0;
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
 .post-title-link {
   flex: 1;
   font-size: 1rem;
   font-weight: 500;
+}
+
+.post-title-link:hover,
+.post-title-link:focus {
+  color: var(--color-link);
+  border-bottom-color: transparent;
 }
 
 .post-date {
