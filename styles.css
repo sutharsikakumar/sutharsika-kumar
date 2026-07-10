@@ -354,6 +354,11 @@ a.footer-item:focus {
   list-style: none;
 }
 
+.coming-soon {
+  color: var(--muted);
+  font-size: .95rem;
+}
+
 .work-row {
   display: flex;
   justify-content: space-between;
