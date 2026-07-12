@@ -35,8 +35,8 @@
     var rows = MOVIES.filter(function (m) {
       if (state.status !== "all" && m.status !== state.status) return false;
       if (state.genre !== "all" &&
-          !m.genre.map(String).map(function (g) { return g.toLowerCase(); })
-            .includes(state.genre.toLowerCase())) return false;
+        !m.genre.map(String).map(function (g) { return g.toLowerCase(); })
+          .includes(state.genre.toLowerCase())) return false;
       if (!q) return true;
       var hay = [m.title, m.director, m.note, m.genre.join(" "), m.tags.join(" ")]
         .join(" ").toLowerCase();
@@ -45,10 +45,10 @@
 
     rows.sort(function (a, b) {
       switch (state.sort) {
-        case "title-asc":  return a.title.localeCompare(b.title);
-        case "year-asc":   return a.year - b.year;
-        case "year-desc":  return b.year - a.year;
-        case "rating-desc":return (b.rating || 0) - (a.rating || 0);
+        case "title-asc": return a.title.localeCompare(b.title);
+        case "year-asc": return a.year - b.year;
+        case "year-desc": return b.year - a.year;
+        case "rating-desc": return (b.rating || 0) - (a.rating || 0);
         case "rating-asc": return (a.rating || 0) - (b.rating || 0);
         default: return 0;
       }
@@ -79,12 +79,12 @@
 
       return (
         '<button class="archive__row" type="button" data-id="' + esc(m.id) + '" aria-expanded="false">' +
-          '<span class="cell-title">' + esc(m.title) + '</span>' +
-          '<span class="cell-genre"><span class="pill pill--cat pill--' + tintFor(primaryGenre) + '">' + esc(primaryGenre.toLowerCase()) + '</span></span>' +
-          '<span class="cell-year">' + m.year + '</span>' +
-          '<span class="cell-dir col-hide-md">' + esc(m.director) + '</span>' +
-          '<span class="cell-rating-wrap">' + ratingCell + '</span>' +
-          '<span class="cell-tags">' + tags + extra + '</span>' +
+        '<span class="cell-title">' + esc(m.title) + '</span>' +
+        '<span class="cell-genre"><span class="pill pill--cat pill--' + tintFor(primaryGenre) + '">' + esc(primaryGenre.toLowerCase()) + '</span></span>' +
+        '<span class="cell-year">' + m.year + '</span>' +
+        '<span class="cell-dir col-hide-md">' + esc(m.director) + '</span>' +
+        '<span class="cell-rating-wrap">' + ratingCell + '</span>' +
+        '<span class="cell-tags">' + tags + extra + '</span>' +
         '</button>'
       );
     }).join("");
@@ -150,7 +150,7 @@
 
   function field(label, value) {
     return '<div><div class="drawer__field-label">' + label + '</div>' +
-           '<div class="drawer__field-value">' + value + '</div></div>';
+      '<div class="drawer__field-value">' + value + '</div></div>';
   }
   function fmtRuntime(min) {
     if (!min) return "—";
@@ -184,22 +184,22 @@
 
   // ---- Wire up -----------------------------------------------------
   function init() {
-    els.search    = document.querySelector("[data-movie-search]");
-    els.sort      = document.querySelector("[data-movie-sort]");
-    els.filters   = document.querySelector("[data-movie-genres]");
-    els.status    = document.querySelector("[data-movie-status]");
-    els.count     = document.querySelector("[data-movie-count]");
-    els.list      = document.querySelector("[data-movie-list]");
-    els.empty     = document.querySelector("[data-movie-empty]");
-    els.drawer    = document.querySelector("[data-drawer]");
-    els.backdrop  = document.querySelector("[data-drawer-backdrop]");
-    els.drawerTitle  = document.querySelector("[data-drawer-title]");
-    els.drawerMeta   = document.querySelector("[data-drawer-meta]");
+    els.search = document.querySelector("[data-movie-search]");
+    els.sort = document.querySelector("[data-movie-sort]");
+    els.filters = document.querySelector("[data-movie-genres]");
+    els.status = document.querySelector("[data-movie-status]");
+    els.count = document.querySelector("[data-movie-count]");
+    els.list = document.querySelector("[data-movie-list]");
+    els.empty = document.querySelector("[data-movie-empty]");
+    els.drawer = document.querySelector("[data-drawer]");
+    els.backdrop = document.querySelector("[data-drawer-backdrop]");
+    els.drawerTitle = document.querySelector("[data-drawer-title]");
+    els.drawerMeta = document.querySelector("[data-drawer-meta]");
     els.drawerPoster = document.querySelector("[data-drawer-poster]");
     els.drawerFields = document.querySelector("[data-drawer-fields]");
     els.drawerReview = document.querySelector("[data-drawer-review]");
-    els.drawerTags   = document.querySelector("[data-drawer-tags]");
-    els.drawerClose  = document.querySelector("[data-drawer-close]");
+    els.drawerTags = document.querySelector("[data-drawer-tags]");
+    els.drawerClose = document.querySelector("[data-drawer-close]");
 
     if (!els.list) return;
 

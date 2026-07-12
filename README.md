@@ -1,1 +1,1 @@
-make the home button have no arrow and evenly spaced, remove the /movie corner etc for all pages. build out the book pages with screenshot format provided like a bookshelf. move the crow to be right next to side quests. Also make crow appear on random pages and say things related to that page. center align the navigation for the dropdown menu photography baking etc.
+personal website
