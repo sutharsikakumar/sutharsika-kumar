@@ -3,21 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bookshelf: Sutharsika Kumar</title>
+  <title>Bookshelf — Sutharsika Kumar</title>
+  <meta name="description" content="A personal bookshelf — ratings, quotes, and notes on what I've read." />
   <link rel="icon" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../styles.css" />
   <script src="../../assets/site.js" defer></script>
+  <script src="../../assets/books-data.js" defer></script>
+  <script src="../../assets/books.js" defer></script>
 </head>
-<body>
-  <main class="page">
+<body data-crow-page="bookshelf">
+  <main class="page page--wide">
+
     <header class="site-header">
-      <a class="btn" href="/"><span class="btn__glyph" aria-hidden="true"></span>Home</a>
-      <span class="crumb"><span class="crumb__sep">/</span><span class="crumb__current">bookshelf</span></span>
+      <a class="btn btn--home" href="/">Home</a>
     </header>
+
     <h1 class="page-title">Bookshelf</h1>
-    <p class="page-lede">The truth of the world can be expressed in the books we consume.</p>
-    <p class="state">Coming soon.</p>
+    <p class="page-lede">The truth of the world can be expressed in the books we consume. Pull one from the shelf.</p>
+
+    <div class="bookshelf" data-bookshelf role="group" aria-label="Bookshelf. Use arrow keys to move between books; press Enter to open one."></div>
+
     <footer class="footer-links" data-footer></footer>
   </main>
+
+  <!-- Open-book transition stage -->
+  <div class="book-stage" data-book-stage aria-hidden="true"></div>
+
+  <!-- Detail drawer -->
+  <div class="drawer-backdrop" data-drawer-backdrop></div>
+  <aside class="drawer" data-drawer role="dialog" aria-modal="true" aria-labelledby="book-drawer-title" aria-hidden="true">
+    <div class="drawer__header">
+      <h2 class="drawer__title" id="book-drawer-title" data-drawer-title></h2>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Close detail">×</button>
+    </div>
+    <div class="drawer__meta-row" data-drawer-meta></div>
+    <div class="drawer__poster" data-drawer-cover hidden></div>
+    <div class="drawer__grid" data-drawer-fields></div>
+    <div class="drawer__section">
+      <h3>My thoughts</h3>
+      <p class="drawer__review" data-drawer-review></p>
+    </div>
+    <div class="drawer__section" data-drawer-quote-wrap hidden>
+      <h3>Favorite quote</h3>
+      <blockquote class="drawer__quote" data-drawer-quote></blockquote>
+    </div>
+    <div class="drawer__section" data-drawer-notes-wrap hidden>
+      <h3>Why it mattered</h3>
+      <p class="drawer__review" data-drawer-notes></p>
+    </div>
+    <div class="drawer__section">
+      <h3>Themes</h3>
+      <div class="drawer__tags" data-drawer-tags></div>
+    </div>
+  </aside>
 </body>
 </html>

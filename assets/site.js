@@ -85,41 +85,111 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
   }
 
   // 3. Interactive crow --------------------------------------------
-  var CROW_LINES = [
-    "You have excellent taste in tabs.",
-    "I remember every interesting thing you almost finished.",
-    "This website contains traces of ambition.",
-    "I collect shiny ideas, not shiny objects.",
-    "You should probably open another research paper.",
-    "The human made this instead of sleeping.",
-    "I have reviewed the archive. It is sufficiently strange.",
-    "Somewhere, a half-finished project is waiting.",
-  ];
+  // Page-specific dialogue. The active set is chosen from the page's
+  // body[data-crow-page] value; "default" is the fallback.
+  var CROW_DIALOGUE = {
+    sidequests: [
+      "Another hobby? Bold. I approve.",
+      "You collect interests like I collect shiny bottle caps.",
+      "Side quests are just the main quest wearing a disguise.",
+      "So many curiosities, so few unhaunted afternoons.",
+      "I counted your hobbies. I ran out of talons.",
+      "Curiosity killed the cat. I'm a crow. I'll risk it.",
+    ],
+    bookshelf: [
+      "Careful — that spine's been cracked before.",
+      "You dog-eared page 112. I noticed. I always notice.",
+      "Three bookmarks, none past chapter two. Ambitious.",
+      "The margins are where the real book lives.",
+      "The unread stack's getting tall. Cozy, though.",
+      "I'd steal a first edition, but it won't fit in the nest.",
+    ],
+    movies: [
+      "The director's cut is just the same regret, extended.",
+      "You've rewatched this ending more than the beginning.",
+      "Skip the trailer. I'll narrate. Badly.",
+      "Great film. Would've cast more crows.",
+      "You paused on the credits again. Sentimental.",
+      "That plot twist? Saw it coming from the rooftop.",
+    ],
+    photography: [
+      "Golden hour waits for no one. Except you, apparently.",
+      "Nice light. Shame about the pigeon in frame.",
+      "You caught the moment. I caught a worm. We both win.",
+      "Rule of thirds? I prefer the rule of shiny.",
+      "That's a lot of photos of the same sunset.",
+      "Hold still — the good shot is always the next one.",
+    ],
+    baking: [
+      "You dropped a crumb. It's mine now. Rules are rules.",
+      "Frosting is just edible cement. Delicious cement.",
+      "I'll trade you a secret for the corner slice.",
+      "The recipe says 'let cool.' Nobody lets it cool.",
+      "One does not simply walk past a fresh cake.",
+      "Lick the spoon. I won't tell. I'll just watch.",
+    ],
+    art: [
+      "That corner's still unfinished. I respect the suspense.",
+      "You bought more paint than wall. Classic.",
+      "Every gallery needs one confused crow. I volunteer.",
+      "That's not a smudge, it's 'texture.' I read the plaque.",
+      "Color outside the lines, then eat the lines.",
+      "Unfinished canvases are just paintings being coy.",
+    ],
+    default: [
+      "You have excellent taste in tabs.",
+      "This website contains traces of ambition.",
+      "I collect shiny ideas, not shiny objects.",
+      "Somewhere, a half-finished project is waiting.",
+      "I have reviewed the archive. It is sufficiently strange.",
+    ],
+  };
 
-  function initCrow() {
-    var crow = document.querySelector("[data-crow]");
-    var bubble = document.querySelector("[data-crow-bubble]");
-    if (!crow || !bubble) return;
+  function currentPageKey() {
+    var key = document.body.getAttribute("data-crow-page");
+    return key && CROW_DIALOGUE[key] ? key : "default";
+  }
 
-    var order = shuffle(CROW_LINES.slice());
+  // Resolve the assets/ directory from this script's own src so an
+  // injected crow image works at any page depth.
+  function assetsBase() {
+    var s = document.querySelector('script[src$="site.js"]');
+    if (!s) return "assets/";
+    return s.getAttribute("src").replace(/site\.js.*$/, "");
+  }
+
+  // Deterministic per-page-per-day decision — stable across reloads
+  // (no hydration flicker), but varies by page and day.
+  function hashStr(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+  function crowShouldAppear(pageKey) {
+    var day = new Date().toISOString().slice(0, 10);
+    return hashStr(pageKey + "|" + day) % 100 < 55; // ~55% of days
+  }
+
+  // Wire hover / focus / click behaviour onto a crow + its bubble.
+  function wireCrow(crow, bubble, lines) {
+    var order = shuffle(lines.slice());
     var idx = 0;
-    var pinned = false; // set by tap/click on touch devices
+    var pinned = false;
     var hovering = false;
 
     function nextLine() {
       if (idx >= order.length) { order = shuffle(order); idx = 0; }
       return order[idx++];
     }
-
     function show() {
       bubble.textContent = nextLine();
       bubble.setAttribute("data-visible", "");
     }
-    function hide() {
-      bubble.removeAttribute("data-visible");
-    }
+    function hide() { bubble.removeAttribute("data-visible"); }
 
-    // Pointer hover (desktop)
     crow.addEventListener("mouseenter", function () {
       hovering = true;
       if (!pinned) show();
@@ -128,12 +198,8 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
       hovering = false;
       if (!pinned) hide();
     });
-
-    // Keyboard focus
     crow.addEventListener("focus", function () { if (!pinned) show(); });
     crow.addEventListener("blur", function () { if (!pinned) hide(); });
-
-    // Tap / click toggles a pinned bubble (mobile + click parity)
     crow.addEventListener("click", function (e) {
       e.stopPropagation();
       pinned = !pinned;
@@ -141,8 +207,6 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
       else if (!hovering) hide();
       crow.setAttribute("aria-expanded", pinned ? "true" : "false");
     });
-
-    // Tap elsewhere / Escape dismisses a pinned bubble
     document.addEventListener("click", function (e) {
       if (pinned && !e.target.closest("[data-crow]")) {
         pinned = false;
@@ -157,6 +221,33 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
         crow.setAttribute("aria-expanded", "false");
       }
     });
+  }
+
+  function initCrow() {
+    var lines = CROW_DIALOGUE[currentPageKey()];
+
+    // Explicit crow present in the markup (homepage, beside Side-Quests).
+    var crow = document.querySelector("[data-crow]");
+    var bubble = document.querySelector("[data-crow-bubble]");
+    if (crow && bubble) { wireCrow(crow, bubble, lines); return; }
+
+    // Otherwise, maybe inject a floating crow on an eligible sub-page.
+    var pageKey = document.body.getAttribute("data-crow-page");
+    if (!pageKey || !CROW_DIALOGUE[pageKey]) return;
+    if (!crowShouldAppear(pageKey)) return;
+
+    var host = document.createElement("div");
+    host.className = "crow-float";
+    host.innerHTML =
+      '<button class="crow crow--floating" data-crow type="button" ' +
+        'aria-expanded="false" aria-describedby="crow-bubble" ' +
+        'aria-label="A curious crow. Activate to hear what it has to say.">' +
+        '<img src="' + assetsBase() + 'crow.png" alt="" width="76" />' +
+      '</button>' +
+      '<div class="crow-bubble crow-bubble--floating" id="crow-bubble" ' +
+        'data-crow-bubble role="status" aria-live="polite"></div>';
+    document.body.appendChild(host);
+    wireCrow(host.querySelector("[data-crow]"), host.querySelector("[data-crow-bubble]"), lines);
   }
 
   function shuffle(arr) {

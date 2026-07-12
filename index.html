@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles.css" />
   <script src="assets/site.js" defer></script>
 </head>
-<body>
+<body data-crow-page="sidequests">
   <main class="page">
 
     <section class="home">
@@ -27,19 +27,6 @@
           <span class="hpf-label">Illustrated portrait</span>
           <span class="hpf-path">add: assets/portrait.png</span>
         </div>
-
-        <!-- Interactive crow companion -->
-        <button
-          class="crow"
-          data-crow
-          type="button"
-          aria-describedby="crow-bubble"
-          aria-expanded="false"
-          aria-label="A curious crow. Activate to hear what it has to say."
-        >
-          <img src="assets/crow.png" alt="" width="108" />
-        </button>
-        <div class="crow-bubble" id="crow-bubble" data-crow-bubble role="status" aria-live="polite"></div>
       </div>
 
       <div class="home-intro">
@@ -65,14 +52,31 @@
 
       <a class="btn" href="technicals/index.html">Technical</a>
 
-      <div class="nav-group">
-        <button class="btn" type="button" aria-expanded="false" aria-haspopup="true">Side-Quests</button>
-        <ul class="nav-menu">
-          <li><a href="side-quests/photography/index.html">Photography</a></li>
-          <li><a href="side-quests/artwork/index.html">Artwork</a></li>
-          <li><a href="side-quests/baking/index.html">Baking</a></li>
-          <li><a href="side-quests/building-my-own-plane/index.html">Building My Own Plane</a></li>
-        </ul>
+      <div class="nav-sidequests">
+        <div class="nav-group">
+          <button class="btn" type="button" aria-expanded="false" aria-haspopup="true">Side-Quests</button>
+          <ul class="nav-menu">
+            <li><a href="side-quests/photography/index.html">Photography</a></li>
+            <li><a href="side-quests/artwork/index.html">Artwork</a></li>
+            <li><a href="side-quests/baking/index.html">Baking</a></li>
+            <li><a href="side-quests/building-my-own-plane/index.html">Building My Own Plane</a></li>
+          </ul>
+        </div>
+
+        <!-- Interactive crow companion — perched beside Side-Quests -->
+        <div class="crow-host">
+          <button
+            class="crow crow--inline"
+            data-crow
+            type="button"
+            aria-describedby="crow-bubble"
+            aria-expanded="false"
+            aria-label="A curious crow. Activate to hear what it has to say."
+          >
+            <img src="assets/crow.png" alt="" width="54" />
+          </button>
+          <div class="crow-bubble crow-bubble--inline" id="crow-bubble" data-crow-bubble role="status" aria-live="polite"></div>
+        </div>
       </div>
     </nav>
 
