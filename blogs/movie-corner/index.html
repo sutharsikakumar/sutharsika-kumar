@@ -4,23 +4,81 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Movie Corner — Sutharsika Kumar</title>
+  <meta name="description" content="A personal film archive — ratings, notes, and tags." />
   <link rel="icon" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <script src="../../assets/site.js" defer></script>
+  <script src="../../assets/movies-data.js" defer></script>
+  <script src="../../assets/movies.js" defer></script>
 </head>
 <body>
+  <main class="page page--wide">
 
-  <main class="page">
+    <header class="site-header">
+      <a class="btn" href="/"><span class="btn__glyph" aria-hidden="true">←</span> Home</a>
+      <span class="crumb"><span class="crumb__sep">/</span><span class="crumb__current">movie corner</span></span>
+    </header>
 
-    <div class="page-tab">
-      <a class="pill pill--green" href="../../index.html">Movie Corner</a>
+    <h1 class="page-title">Movie Corner</h1>
+    <p class="page-lede">A personal film archive. Search, filter by genre or status, and sort — then open any row for the full note.</p>
+
+    <div class="toolbar">
+      <label class="search">
+        <span class="visually-hidden">Search films</span>
+        <svg class="search__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="search" placeholder="Search films, directors, notes…" data-movie-search autocomplete="off" />
+      </label>
+      <span class="select">
+        <label class="visually-hidden" for="movie-sort">Sort by</label>
+        <select id="movie-sort" data-movie-sort>
+          <option value="year-desc">Newest first</option>
+          <option value="year-asc">Oldest first</option>
+          <option value="title-asc">Title A–Z</option>
+          <option value="rating-desc">Rating high→low</option>
+          <option value="rating-asc">Rating low→high</option>
+        </select>
+      </span>
     </div>
 
-    <p class="work-meta">Coming Soon</p>
+    <div class="filter-bar" role="group" aria-label="Filter by genre" data-movie-genres></div>
+    <div class="filter-bar" role="group" aria-label="Filter by watched status" data-movie-status></div>
 
+    <p class="result-count" data-movie-count aria-live="polite"></p>
+
+    <div class="archive" role="table" aria-label="Films">
+      <div class="archive__head" role="row">
+        <span role="columnheader">Title</span>
+        <span role="columnheader">Genre</span>
+        <span role="columnheader">Year</span>
+        <span role="columnheader" class="col-hide-md">Director</span>
+        <span role="columnheader">Rating</span>
+        <span role="columnheader">Tags</span>
+      </div>
+      <div data-movie-list></div>
+      <p class="state state--empty" data-movie-empty hidden>No films match your filters yet.</p>
+    </div>
+
+    <footer class="footer-links" data-footer></footer>
   </main>
 
+  <!-- Detail drawer -->
+  <div class="drawer-backdrop" data-drawer-backdrop></div>
+  <aside class="drawer" data-drawer role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+    <div class="drawer__header">
+      <h2 class="drawer__title" id="drawer-title" data-drawer-title></h2>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Close detail">×</button>
+    </div>
+    <div class="drawer__meta-row" data-drawer-meta></div>
+    <div class="drawer__poster" data-drawer-poster hidden></div>
+    <div class="drawer__grid" data-drawer-fields></div>
+    <div class="drawer__section">
+      <h3>Note</h3>
+      <p class="drawer__review" data-drawer-review></p>
+    </div>
+    <div class="drawer__section">
+      <h3>Tags</h3>
+      <div class="drawer__tags" data-drawer-tags></div>
+    </div>
+  </aside>
 </body>
 </html>

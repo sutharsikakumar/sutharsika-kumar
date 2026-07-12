@@ -4,17 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photography — Sutharsika Kumar</title>
+  <meta name="description" content="A small photography collection." />
   <link rel="icon" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <script src="../../assets/site.js" defer></script>
 </head>
 <body>
-  <main class="page">
-    <div class="page-tab">
-      <a class="pill pill--grey" href="../../index.html">Photography</a>
-    </div>
+  <main class="page page--wide">
+    <header class="site-header">
+      <a class="btn" href="/"><span class="btn__glyph" aria-hidden="true">←</span> Home</a>
+      <span class="crumb"><span class="crumb__sep">/</span><span class="crumb__current">photography</span></span>
+    </header>
+    <h1 class="page-title">Photography</h1>
+    <p class="page-lede">Places, animals, and light — mostly from California and the East Coast.</p>
     <div class="photo-grid">
       <article class="photo-card" tabindex="0">
         <img src="images/lighthouse.jpeg" alt="Lighthouse" loading="lazy" />
@@ -121,6 +123,7 @@
         </div>
       </article>
     </div>
+    <footer class="footer-links" data-footer></footer>
   </main>
 </body>
 </html>

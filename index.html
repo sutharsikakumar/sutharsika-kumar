@@ -4,32 +4,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sutharsika Kumar</title>
+  <meta name="description" content="A small personal archive — writing, publications, film notes, art, baking, and side quests by Sutharsika Kumar." />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
   <script src="assets/site.js" defer></script>
 </head>
 <body>
   <main class="page">
-    <div class="home-header">
-      <img class="home-photo" src="assets/profile.jpg?v=2" alt="Photo of Sutharsika Kumar" />
-      <div>
-        <h1 class="home-name">Sutharsika Kumar</h1>
-        <p class="home-bio">Hey, I’m Sutharsika, and I love trying new things. Naturally, that has led me to explore various hobbies and topics. This is a small collection of my work.
-          
-          <br><br>
-          
-          <p>I’m interested in the foundations of next-generation AI systems, particularly how foundation models, data, algorithms, and computing systems can be co-designed to make AI more capable, efficient, and reliable. Previously, I collaborated with researchers at Duke, MIT, and Google DeepMind to develop an autonomous pipeline for 2D material image segmentation. I’m currently exploring self-evolving agents advised by Dr. Haozhe Wang at Duke. Feel free to reach out at <a href="mailto:sutharsika.kumar07@gmail.com">sutharsika.kumar07@gmail.com</a>.</p>
-      </div>
-    </div>
 
-    <div class="nav-pills">
-      <a class="pill pill--blue" href="publications/index.html">Publications</a>
+    <section class="home">
+      <div class="home-figure">
+        <!-- Portrait self-heals: drop a hand-drawn illustration at assets/portrait.png
+             and it replaces the labelled placeholder automatically. -->
+        <img
+          class="home-portrait"
+          src="assets/portrait.png"
+          alt="Hand-drawn illustration of Sutharsika Kumar"
+          width="230"
+          onerror="this.style.display='none';document.getElementById('portrait-fallback').setAttribute('data-active','');"
+        />
+        <div class="home-portrait-fallback" id="portrait-fallback" aria-hidden="true">
+          <span class="hpf-label">Illustrated portrait</span>
+          <span class="hpf-path">add: assets/portrait.png</span>
+        </div>
+
+        <!-- Interactive crow companion -->
+        <button
+          class="crow"
+          data-crow
+          type="button"
+          aria-describedby="crow-bubble"
+          aria-expanded="false"
+          aria-label="A curious crow. Activate to hear what it has to say."
+        >
+          <img src="assets/crow.png" alt="" width="108" />
+        </button>
+        <div class="crow-bubble" id="crow-bubble" data-crow-bubble role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="home-intro">
+        <h1 class="home-name">Sutharsika Kumar</h1>
+        <div class="home-bio">
+          <p>Hey, I’m Sutharsika, and I love trying new things. Naturally, that has led me to explore various hobbies and topics. This is a small collection of my work.</p>
+          <p>I’m interested in the foundations of next-generation AI systems, particularly how foundation models, data, algorithms, and computing systems can be co-designed to make AI more capable, efficient, and reliable. Previously, I collaborated with researchers at Duke, MIT, and Google DeepMind to develop an autonomous pipeline for 2D material image segmentation. I’m currently exploring self-evolving agents advised by Dr. Haozhe Wang at Duke. Feel free to reach out at <a href="mailto:sutharsika.kumar07@gmail.com">sutharsika.kumar07@gmail.com</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav" aria-label="Sections">
+      <a class="btn" href="publications/index.html">Publications</a>
 
       <div class="nav-group">
-        <button class="pill pill--green" aria-expanded="false" aria-haspopup="true">Blogs</button>
+        <button class="btn" type="button" aria-expanded="false" aria-haspopup="true">Blogs</button>
         <ul class="nav-menu">
           <li><a href="blogs/writing/index.html">Writing</a></li>
           <li><a href="blogs/movie-corner/index.html">Movie Corner</a></li>
@@ -37,10 +63,10 @@
         </ul>
       </div>
 
-      <a class="pill pill--green" href="technicals/index.html">Technical</a>
+      <a class="btn" href="technicals/index.html">Technical</a>
 
       <div class="nav-group">
-        <button class="pill pill--grey" aria-expanded="false" aria-haspopup="true">Side-Quests</button>
+        <button class="btn" type="button" aria-expanded="false" aria-haspopup="true">Side-Quests</button>
         <ul class="nav-menu">
           <li><a href="side-quests/photography/index.html">Photography</a></li>
           <li><a href="side-quests/artwork/index.html">Artwork</a></li>
@@ -48,7 +74,7 @@
           <li><a href="side-quests/building-my-own-plane/index.html">Building My Own Plane</a></li>
         </ul>
       </div>
-    </div>
+    </nav>
 
     <footer class="footer-links" data-footer></footer>
   </main>

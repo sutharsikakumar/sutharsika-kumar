@@ -4,43 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Baking — Sutharsika Kumar</title>
+  <meta name="description" content="A few cakes, suspended mid-air." />
   <link rel="icon" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <script src="../../assets/site.js" defer></script>
 </head>
 <body>
-  <main class="page">
-    <div class="page-tab">
-      <a class="pill pill--grey" href="../../index.html">Baking</a>
+  <main class="page page--wide">
+
+    <header class="site-header">
+      <a class="btn" href="/"><span class="btn__glyph" aria-hidden="true">←</span> Home</a>
+      <span class="crumb"><span class="crumb__sep">/</span><span class="crumb__current">baking</span></span>
+    </header>
+
+    <h1 class="page-title">Baking</h1>
+    <p class="page-lede">A few cakes I’ve made, left to float. Hover any of them for a closer look.</p>
+
+    <div class="float-stage">
+      <button class="cake cake--a" type="button" style="--drift-dur: 7.5s; --drift-delay: 0s;">
+        <img src="images/strawberry.png" alt="Strawberry chocolate-drip cake with fresh strawberries over whipped cream" loading="lazy" />
+        <span class="cake__label"><strong>Strawberries &amp; Cream</strong>Chocolate ganache drip with fresh strawberries over whipped cream.</span>
+      </button>
+
+      <button class="cake cake--b" type="button" style="--drift-dur: 6s; --drift-delay: -2s;">
+        <img src="images/pink-drip.png" alt="Pink buttercream cake with a dark chocolate drip and chocolate shards" loading="lazy" />
+        <span class="cake__label"><strong>Pink Drip</strong>Pink buttercream with a dark chocolate drip and chocolate shards.</span>
+      </button>
+
+      <button class="cake cake--c" type="button" style="--drift-dur: 8.5s; --drift-delay: -4s;">
+        <img src="images/tiramisu.png" alt="Tiramisu cake with whipped-cream rosettes dusted with cocoa" loading="lazy" />
+        <span class="cake__label"><strong>Tiramisu</strong>Whipped cream rosettes dusted with cocoa.</span>
+      </button>
     </div>
-    <div class="photo-grid">
-      <article class="photo-card" tabindex="0">
-        <img src="images/strawberry.png" alt="Strawberry chocolate drip cake" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Strawberries & Cream</span>
-          <span class="photo-note">Chocolate ganache drip with fresh strawberries over whipped cream.</span>
-          <span class="photo-meta">Homemade</span>
-        </div>
-      </article>
-      <article class="photo-card" tabindex="0">
-        <img src="images/pink-drip.jpg" alt="Pink buttercream drip cake" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Pink Drip</span>
-          <span class="photo-note">Pink buttercream with a dark chocolate drip and chocolate shards.</span>
-          <span class="photo-meta">Homemade</span>
-        </div>
-      </article>
-      <article class="photo-card" tabindex="0">
-        <img src="images/tiramisu.png" alt="Tiramisu cake" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Tiramisu</span>
-          <span class="photo-note">Whipped cream rosettes dusted with cocoa.</span>
-          <span class="photo-meta">Homemade</span>
-        </div>
-      </article>
-    </div>
+
+    <footer class="footer-links" data-footer></footer>
   </main>
 </body>
 </html>

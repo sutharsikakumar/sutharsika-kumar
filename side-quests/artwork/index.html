@@ -4,51 +4,78 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Artwork — Sutharsika Kumar</title>
+  <meta name="description" content="A small gallery of colored-pencil drawings." />
   <link rel="icon" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+  <script src="../../assets/site.js" defer></script>
+  <script src="../../assets/gallery.js" defer></script>
 </head>
 <body>
-  <main class="page">
-    <div class="page-tab">
-      <a class="pill pill--grey" href="../../index.html">Artwork</a>
+  <main class="page page--wide">
+
+    <header class="site-header">
+      <a class="btn" href="/"><span class="btn__glyph" aria-hidden="true">←</span> Home</a>
+      <span class="crumb"><span class="crumb__sep">/</span><span class="crumb__current">artwork</span></span>
+    </header>
+
+    <h1 class="page-title">Artwork</h1>
+    <p class="page-lede">Colored-pencil drawings, shown at their natural proportions. Click any piece to view it full-screen.</p>
+
+    <div class="gallery">
+      <button class="art" type="button"
+        data-full="images/bird.png"
+        data-title="Indian Roller" data-medium="Colored pencil on mixed media paper" data-year=""
+        data-desc="Was inspired to draw this after a flash of blue passed me while I was spending some time at my grandmother's house in Tamil Nadu, India.">
+        <figure>
+          <span class="art__frame"><img src="images/bird.png" alt="Colored-pencil drawing of an Indian Roller bird" width="1848" height="1276" loading="lazy" decoding="async" /></span>
+          <figcaption>
+            <span class="art__caption-title">Indian Roller</span>
+            <span class="art__caption-meta">Colored pencil on mixed media paper</span>
+          </figcaption>
+        </figure>
+      </button>
+
+      <button class="art" type="button"
+        data-full="images/collage.png"
+        data-title="Secret Garden" data-medium="Colored pencil on mixed media paper" data-year=""
+        data-desc="Entered this into a Charlotte, NC regional art competition and won 2nd place.">
+        <figure>
+          <span class="art__frame"><img src="images/collage.png" alt="Colored-pencil collage titled Secret Garden" width="1740" height="1278" loading="lazy" decoding="async" /></span>
+          <figcaption>
+            <span class="art__caption-title">Secret Garden</span>
+            <span class="art__caption-meta">Colored pencil on mixed media paper</span>
+          </figcaption>
+        </figure>
+      </button>
+
+      <button class="art" type="button"
+        data-full="images/dancer.png"
+        data-title="Harinie Jeevitha" data-medium="Colored pencil on mixed media paper" data-year=""
+        data-desc="Have always adored her work, drew this while I was working towards my arangetram.">
+        <figure>
+          <span class="art__frame"><img src="images/dancer.png" alt="Colored-pencil drawing of dancer Harinie Jeevitha" width="1156" height="1392" loading="lazy" decoding="async" /></span>
+          <figcaption>
+            <span class="art__caption-title">Harinie Jeevitha</span>
+            <span class="art__caption-meta">Colored pencil on mixed media paper</span>
+          </figcaption>
+        </figure>
+      </button>
+
+      <button class="art" type="button"
+        data-full="images/reflection.png"
+        data-title="Reflection on Life" data-medium="Colored pencil on black drawing paper" data-year=""
+        data-desc="Scholastic Art Award submission, Honorable Mention.">
+        <figure>
+          <span class="art__frame"><img src="images/reflection.png" alt="Colored-pencil drawing titled Reflection on Life" width="1920" height="1430" loading="lazy" decoding="async" /></span>
+          <figcaption>
+            <span class="art__caption-title">Reflection on Life</span>
+            <span class="art__caption-meta">Colored pencil on black drawing paper</span>
+          </figcaption>
+        </figure>
+      </button>
     </div>
-    <div class="photo-grid">
-      <article class="photo-card" tabindex="0">
-        <img src="images/bird.png" alt="Bird" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Indian Roller</span>
-          <span class="photo-note">Was inspired to draw this after a flash of blue passed me while I was spending some time at my grandmother's house in Tamil Nadu, India.</span>
-          <span class="photo-meta">Colored pencil on mixed media paper.</span>
-        </div>
-      </article>
-      <article class="photo-card" tabindex="0">
-        <img src="images/collage.png" alt="Collage" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Secret Garden</span>
-          <span class="photo-note">Entered this into a Charlotte, NC regional art competition and won 2nd place.</span>
-          <span class="photo-meta">Colored pencil on mixed media paper.</span>
-        </div>
-      </article>
-      <article class="photo-card" tabindex="0">
-        <img src="images/dancer.png" alt="Dancer" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Harinie Jeevitha</span>
-          <span class="photo-note">Have always adored her work, drew this while I was working towards my arangetram.</span>
-          <span class="photo-meta">Colored pencil on mixed media paper.</span>
-        </div>
-      </article>
-      <article class="photo-card" tabindex="0">
-        <img src="images/reflection.png" alt="Reflection" loading="lazy" />
-        <div class="photo-overlay">
-          <span class="photo-title">Reflection on Life.</span>
-          <span class="photo-note">Scholastic Art Award Submission, Honorable Mention.</span>
-          <span class="photo-meta">Colored pencil on black drawing paper.</span>
-        </div>
-      </article>
-    </div>
+
+    <footer class="footer-links" data-footer></footer>
   </main>
 </body>
 </html>
