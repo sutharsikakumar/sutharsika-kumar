@@ -7,14 +7,9 @@
 //
 // Rating scale: 1–10, or null if unrated.
 //
-// Spine appearance is data-driven so the shelf feels arranged, not gridded:
-//   shelf   → which shelf it sits on (0-based). Books on the same shelf keep
-//             their array order, left → right. Omit to auto-flow.
-//   spine   → colour swatch: "science" | "fiction" | "advice" | "nonfiction"
-//             | "neutral" (reuses the site's category tints), OR any CSS colour.
-//   width   → relative spine thickness, ~0.8–1.4 (1 = default).
-//   height  → relative spine height, ~0.8–1 (1 = tallest).
-//   lie     → true renders the book lying flat as a shelf accent (optional).
+// Shelves: a book sits on the "Read" shelf or the "Want to read" shelf.
+//   status  → "read" | "to-read". Omit it and the shelf is inferred from
+//             `read` (a read date means read).
 
 /**
  * @typedef {Object} Book
@@ -29,11 +24,7 @@
  * @property {string}        quote    A favourite quote (may be empty).
  * @property {string}        notes    Why the book mattered to me (optional).
  * @property {string[]}      themes   Free-form themes / tags.
- * @property {number}        [shelf]  Shelf index (0-based). Omit to auto-flow.
- * @property {string}        [spine]  Tint name or CSS colour.
- * @property {number}        [width]  Relative spine thickness (~0.8–1.4).
- * @property {number}        [height] Relative spine height (~0.8–1).
- * @property {boolean}       [lie]    Lay the book flat as a shelf accent.
+ * @property {string}        [status] "read" | "to-read" (inferred from `read` if omitted).
  */
 
 /** @type {Book[]} */
@@ -50,7 +41,7 @@ window.BOOKS = [
     quote: "Light is the left hand of darkness, and darkness the right hand of light.",
     notes: "A placeholder note about why this one mattered.",
     themes: ["science-fiction", "identity", "favorite"],
-    shelf: 0, spine: "science", width: 1.0, height: 1.0,
+    status: "read",
   },
   {
     id: "placeholder-b",
@@ -64,7 +55,7 @@ window.BOOKS = [
     quote: "In my way of thinking, anything was possible.",
     notes: "",
     themes: ["memoir", "art"],
-    shelf: 0, spine: "fiction", width: 0.85, height: 0.92,
+    status: "read",
   },
   {
     id: "placeholder-c",
@@ -78,7 +69,7 @@ window.BOOKS = [
     quote: "Nothing in life is as important as you think it is while you are thinking about it.",
     notes: "",
     themes: ["psychology", "nonfiction"],
-    shelf: 0, spine: "nonfiction", width: 1.3, height: 1.0,
+    status: "read",
   },
   {
     id: "placeholder-d",
@@ -92,7 +83,7 @@ window.BOOKS = [
     quote: "The best arguments in the world won't change a person's mind. The only thing that can do that is a good story.",
     notes: "A placeholder note about why this one mattered.",
     themes: ["fiction", "nature", "favorite"],
-    shelf: 0, spine: "advice", width: 1.1, height: 0.97,
+    status: "read",
   },
   {
     id: "placeholder-e",
@@ -106,7 +97,7 @@ window.BOOKS = [
     quote: "You own everything that happened to you. Tell your stories.",
     notes: "",
     themes: ["writing", "advice"],
-    shelf: 1, spine: "neutral", width: 0.9, height: 0.88,
+    status: "read",
   },
   {
     id: "placeholder-f",
@@ -120,7 +111,7 @@ window.BOOKS = [
     quote: "Cancer is a disease of our own growth, our own inevitability.",
     notes: "",
     themes: ["science", "history", "nonfiction"],
-    shelf: 1, spine: "science", width: 1.35, height: 1.0,
+    status: "read",
   },
   {
     id: "placeholder-g",
@@ -134,7 +125,7 @@ window.BOOKS = [
     quote: "The Beauty of the House is immeasurable; its Kindness infinite.",
     notes: "A placeholder note about why this one mattered.",
     themes: ["fiction", "mystery", "favorite"],
-    shelf: 1, spine: "fiction", width: 0.95, height: 0.95,
+    status: "read",
   },
   {
     id: "placeholder-h",
@@ -148,7 +139,7 @@ window.BOOKS = [
     quote: "",
     notes: "On the to-read stack.",
     themes: ["fiction", "to-read"],
-    shelf: 1, spine: "neutral", width: 1.4, height: 0.98,
+    status: "to-read",
   },
   {
     id: "placeholder-i",
@@ -162,7 +153,7 @@ window.BOOKS = [
     quote: "All flourishing is mutual.",
     notes: "",
     themes: ["essays", "nature", "nonfiction"],
-    shelf: 2, spine: "advice", width: 1.05, height: 0.94,
+    status: "read",
   },
   {
     id: "placeholder-j",
@@ -176,7 +167,7 @@ window.BOOKS = [
     quote: "The sun always has ways to reach us.",
     notes: "",
     themes: ["science-fiction", "fiction"],
-    shelf: 2, spine: "science", width: 0.9, height: 0.9,
+    status: "read",
   },
   {
     id: "placeholder-k",
@@ -190,7 +181,7 @@ window.BOOKS = [
     quote: "The object isn't to make art, it's to be in that wonderful state which makes art inevitable.",
     notes: "",
     themes: ["art", "advice"],
-    shelf: 2, spine: "nonfiction", width: 1.15, height: 1.0, lie: true,
+    status: "read",
   },
   {
     id: "placeholder-l",
@@ -204,6 +195,6 @@ window.BOOKS = [
     quote: "Survival is insufficient.",
     notes: "",
     themes: ["fiction", "post-apocalyptic"],
-    shelf: 2, spine: "fiction", width: 1.0, height: 0.96,
+    status: "read",
   },
 ];

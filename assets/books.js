@@ -1,25 +1,18 @@
-// books.js — renders the bookshelf (shelves + spines), an open-book
-// transition, and a detail drawer. Reads window.BOOKS (see books-data.js).
-// Mirrors the Movie Corner interaction pattern (overlay drawer) with a
-// book-opening animation. Vanilla JS, no dependencies.
+// books.js — renders the bookshelf (two flat shelves of uniform spines)
+// and a detail drawer. Reads window.BOOKS (see books-data.js).
+// Mirrors the Movie Corner interaction pattern (overlay drawer).
+// Vanilla JS, no dependencies.
 
 (function () {
   "use strict";
 
   var BOOKS = Array.isArray(window.BOOKS) ? window.BOOKS : [];
 
-  // Named tints reuse the site's category palette; anything else is a
-  // literal CSS colour.
-  var TINT_VAR = {
-    science: "var(--tag-science)",
-    fiction: "var(--tag-fiction)",
-    advice: "var(--tag-advice)",
-    nonfiction: "var(--tag-nonfiction)",
-    neutral: "var(--tag-neutral)",
-  };
-
-  var reduceMotion = window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Every spine looks the same; the shelf it sits on is the only grouping.
+  var SHELVES = [
+    { key: "read", label: "Read", empty: "Nothing here yet." },
+    { key: "to-read", label: "Want to read", empty: "Nothing on the stack." },
+  ];
 
   var els = {};
   var lastFocused = null;
@@ -29,59 +22,43 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
-  function spineColor(b) { return TINT_VAR[b.spine] || b.spine || "var(--tag-neutral)"; }
-  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
-  // ---- Shelves ------------------------------------------------------
-  // Group books by their `shelf` index; any without one auto-flow into
-  // rows of five so the arrangement stays intentional.
-  function groupShelves() {
-    var map = {}, order = [], auto = 0;
-    BOOKS.forEach(function (b) {
-      var s = (typeof b.shelf === "number") ? b.shelf : ("auto-" + Math.floor(auto++ / 5));
-      if (!map[s]) { map[s] = []; order.push(s); }
-      map[s].push(b);
-    });
-    order.sort(function (a, b) {
-      var na = ("" + a).replace("auto-", ""), nb = ("" + b).replace("auto-", "");
-      return (parseFloat(na) || 0) - (parseFloat(nb) || 0);
-    });
-    return order.map(function (k) { return map[k]; });
+  // A book counts as read unless it says otherwise (or has no read date).
+  function shelfOf(b) {
+    if (b.status === "to-read" || b.status === "read") return b.status;
+    return b.read ? "read" : "to-read";
   }
 
-  // ---- Spine component ---------------------------------------------
-  function renderSpine(b) {
-    var w = Math.round(clamp(b.width || 1, 0.7, 1.6) * 34);        // thickness px
-    var h = Math.round(clamp(b.height || 1, 0.75, 1) * 216);        // height px
+  // ---- Rendering ----------------------------------------------------
+  function renderSpine(b, i) {
     var label = b.title + " by " + b.author +
       (b.rating != null ? ", rated " + b.rating + " out of 10" : "");
-    var tipAuthor = b.author ? '<span class="book-spine__tip-author">' + esc(b.author) + '</span>' : "";
 
-    if (b.lie) {
-      return (
-        '<button class="book-spine book-spine--flat" type="button" role="listitem" ' +
-          'data-id="' + esc(b.id) + '" aria-label="' + esc(label) + '" ' +
-          'style="--w:' + Math.round(h * 0.62) + 'px;--h:' + Math.max(26, Math.round(w * 0.9)) + 'px;background:' + spineColor(b) + ';">' +
-          '<span class="book-spine__title">' + esc(b.title) + '</span>' +
-          '<span class="book-spine__tip" aria-hidden="true"><span class="book-spine__tip-title">' + esc(b.title) + '</span>' + tipAuthor + '</span>' +
-        '</button>'
-      );
-    }
     return (
       '<button class="book-spine" type="button" role="listitem" ' +
-        'data-id="' + esc(b.id) + '" aria-label="' + esc(label) + '" ' +
-        'style="--w:' + w + 'px;--h:' + h + 'px;background:' + spineColor(b) + ';">' +
+        'data-id="' + esc(b.id) + '" aria-expanded="false" aria-label="' + esc(label) + '" ' +
+        'title="' + esc(label) + '" style="--i:' + i + ';">' +
         '<span class="book-spine__title">' + esc(b.title) + '</span>' +
         '<span class="book-spine__author">' + esc(b.author) + '</span>' +
-        '<span class="book-spine__tip" aria-hidden="true"><span class="book-spine__tip-title">' + esc(b.title) + '</span>' + tipAuthor + '</span>' +
       '</button>'
     );
   }
 
-  function renderShelf(books) {
-    return '<div class="shelf"><div class="shelf__books" role="list">' +
-      books.map(renderSpine).join("") +
-      '</div><div class="shelf__ledge" aria-hidden="true"></div></div>';
+  function renderShelf(shelf) {
+    var books = BOOKS.filter(function (b) { return shelfOf(b) === shelf.key; });
+    var count = books.length + (books.length === 1 ? " book" : " books");
+    var body = books.length
+      ? '<div class="shelf__books" role="list">' + books.map(renderSpine).join("") + '</div>' +
+        '<div class="shelf__ledge" aria-hidden="true"></div>'
+      : '<p class="shelf__empty">' + shelf.empty + '</p>';
+
+    return (
+      '<section class="shelf" aria-label="' + shelf.label + '">' +
+        '<h2 class="shelf__head">' + shelf.label +
+          '<span class="shelf__count">' + count + '</span></h2>' +
+        body +
+      '</section>'
+    );
   }
 
   function render() {
@@ -90,38 +67,7 @@
       els.shelf.innerHTML = '<p class="state state--empty">No books on the shelf yet.</p>';
       return;
     }
-    els.shelf.innerHTML = groupShelves().map(renderShelf).join("");
-  }
-
-  // ---- Open-book transition ----------------------------------------
-  // A small book at the click origin swings open, then the drawer opens.
-  function playOpen(b, done) {
-    if (reduceMotion || !els.stage) { done(); return; }
-    els.stage.innerHTML =
-      '<div class="book-open" style="--spine:' + spineColor(b) + ';">' +
-        '<div class="book-open__page"></div>' +
-        '<div class="book-open__cover"></div>' +
-      '</div>';
-    els.stage.setAttribute("data-open", "");
-    var node = els.stage.querySelector(".book-open");
-    // next frame -> trigger the CSS animation
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { node.classList.add("is-open"); });
-    });
-    var finished = false;
-    function finish() {
-      if (finished) return;
-      finished = true;
-      done();
-    }
-    node.addEventListener("animationend", finish, { once: true });
-    setTimeout(finish, 620); // fallback if animationend never fires
-  }
-
-  function clearStage() {
-    if (!els.stage) return;
-    els.stage.removeAttribute("data-open");
-    els.stage.innerHTML = "";
+    els.shelf.innerHTML = SHELVES.map(renderShelf).join("");
   }
 
   // ---- Drawer -------------------------------------------------------
@@ -180,15 +126,12 @@
     lastFocused = triggerEl || document.activeElement;
     if (triggerEl) triggerEl.setAttribute("aria-expanded", "true");
 
-    playOpen(b, function () {
-      clearStage();
-      fillDrawer(b);
-      els.backdrop.setAttribute("data-open", "");
-      els.drawer.setAttribute("data-open", "");
-      els.drawer.setAttribute("aria-hidden", "false");
-      els.close.focus();
-      document.body.style.overflow = "hidden";
-    });
+    fillDrawer(b);
+    els.backdrop.setAttribute("data-open", "");
+    els.drawer.setAttribute("data-open", "");
+    els.drawer.setAttribute("aria-hidden", "false");
+    els.close.focus();
+    document.body.style.overflow = "hidden";
   }
 
   function closeDrawer() {
@@ -219,7 +162,6 @@
   // ---- Wire up ------------------------------------------------------
   function init() {
     els.shelf     = document.querySelector("[data-bookshelf]");
-    els.stage     = document.querySelector("[data-book-stage]");
     els.drawer    = document.querySelector("[data-drawer]");
     els.backdrop  = document.querySelector("[data-drawer-backdrop]");
     els.title     = document.querySelector("[data-drawer-title]");
