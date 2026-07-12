@@ -28,11 +28,11 @@
 /** @type {Movie[]} */
 window.MOVIES = [
   {
-    id: "placeholder-a",
-    title: "Placeholder Film A",
-    year: 2021,
-    director: "Director Name",
-    genre: ["Drama"],
+    id: "laapataa_ladies",
+    title: "Laapataa Ladies",
+    year: 2025,
+    director: "Nitesh Tiwari",
+    genre: ["Comedy", "Drama"],
     runtime: 118,
     rating: 8,
     watched: "3.14.26",
