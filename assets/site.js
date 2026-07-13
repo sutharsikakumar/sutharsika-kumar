@@ -85,65 +85,67 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
   }
 
   // 3. Interactive crow --------------------------------------------
-  // Page-specific dialogue. The active set is chosen from the page's
-  // body[data-crow-page] value; "default" is the fallback.
+  // Page-specific dialogue, addressed to whoever is visiting the site.
+  // The active set is chosen from the page's body[data-crow-page]
+  // value; "default" is the fallback.
   var CROW_DIALOGUE = {
     sidequests: [
-      "Another hobby? Bold. I approve.",
-      "You collect interests like I collect shiny bottle caps.",
-      "Side quests are just the main quest wearing a disguise.",
-      "So many curiosities, so few unhaunted afternoons.",
-      "I counted your hobbies. I ran out of talons.",
-      "Curiosity killed the cat. I'm a crow. I'll risk it.",
+      "You're deep in a stranger's hobby list. On purpose. Wild.",
+      "Scroll all you want. There is no exit interview.",
+      "You came for the résumé and stayed for the birdcore. Correct choice.",
+      "Whatever you were supposed to be doing right now — I won't tell.",
+      "The main quest is a scam invented by people with jobs. Stay a while.",
+      "Curiosity killed the cat. You're not a cat. Probably. Keep clicking.",
+      "You've been here four minutes. That's a relationship now.",
     ],
     bookshelf: [
-      "Careful — that spine's been cracked before.",
-      "You dog-eared page 112. I noticed. I always notice.",
-      "Three bookmarks, none past chapter two. Ambitious.",
-      "The margins are where the real book lives.",
-      "The unread stack's getting tall. Cozy, though.",
-      "I'd steal a first edition, but it won't fit in the nest.",
+      "Yes, you may judge someone by their bookshelf. That's what it's for.",
+      "You're already thinking about which one you'd borrow and not return. I see you.",
+      "I can't read. I just enjoy the crinkle. Don't let that stop you.",
+      "Go on, look for one you've read so you can feel something.",
+      "Nobody's finished every book on their own shelf. Nobody. Not one human.",
+      "Judging the ratings? Bold, from someone with a to-read pile of their own.",
+      "Add one to your list. Ignore it for a year. That's the ritual.",
     ],
     movies: [
-      "The director's cut is just the same regret, extended.",
-      "You've rewatched this ending more than the beginning.",
-      "Skip the trailer. I'll narrate. Badly.",
-      "Great film. Would've cast more crows.",
-      "You paused on the credits again. Sentimental.",
-      "That plot twist? Saw it coming from the rooftop.",
+      "Two hours. No wings. Somehow still the best thing humans have made.",
+      "You're going to disagree with one of these ratings and think about it all day.",
+      "That's not a plot hole, that's a plot lifestyle.",
+      "Not enough birds in any of these. Fix it in post.",
+      "You already scrolled looking for one you've seen. Everyone does.",
+      "I saw the twist coming from a power line six blocks away. You didn't.",
+      "Skip the trailer. I'll spoil it for free.",
+      "Open one. Read the note. Pretend you have opinions. You do have opinions.",
+      "Everything's a 7. Rate it a 7. Free yourself.",
     ],
     photography: [
-      "Golden hour waits for no one. Except you, apparently.",
-      "Nice light. Shame about the pigeon in frame.",
-      "You caught the moment. I caught a worm. We both win.",
-      "Rule of thirds? I prefer the rule of shiny.",
-      "That's a lot of photos of the same sunset.",
-      "Hold still — the good shot is always the next one.",
-    ],
-    baking: [
-      "You dropped a crumb. It's mine now. Rules are rules.",
-      "Frosting is just edible cement. Delicious cement.",
-      "I'll trade you a secret for the corner slice.",
-      "The recipe says 'let cool.' Nobody lets it cool.",
-      "One does not simply walk past a fresh cake.",
-      "Lick the spoon. I won't tell. I'll just watch.",
+      "Take your time. The pictures aren't going anywhere. I might.",
+      "There's a bird in one of these. That bird is my ex. Awkward for us both.",
+      "You're squinting at the corner of that one. It's just a cloud. Let it go.",
+      "Rule of thirds? I follow the rule of shiny and I'm doing great.",
+      "Nice, right? You're allowed to just look. No caption required.",
+      "You've decided which one's your favorite. Sit with that.",
     ],
     art: [
-      "That corner's still unfinished. I respect the suspense.",
-      "You bought more paint than wall. Classic.",
-      "Every gallery needs one confused crow. I volunteer.",
-      "That's not a smudge, it's 'texture.' I read the plaque.",
-      "Color outside the lines, then eat the lines.",
-      "Unfinished canvases are just paintings being coy.",
+      "It's not a mistake, it's texture. I read the little card. I lied, I can't read.",
+      "Every gallery needs one confused bird. I volunteer. I'm already inside.",
+      "Stand back. Squint. Nod slowly. There, now you're an art person.",
+      "You don't have to understand it. I certainly don't and I live here.",
+      "Color outside the lines, then eat the lines. That's my only advice, free of charge.",
+      "You're allowed to like it for no reason. That's the whole system.",
     ],
     default: [
-      "You have excellent taste in tabs.",
-      "This website contains traces of ambition.",
-      "I collect shiny ideas, not shiny objects.",
-      "Somewhere, a half-finished project is waiting.",
-      "I have reviewed the archive. It is sufficiently strange.",
+      "Nice tabs. All 47 of them. Bold of you to open another.",
+      "This website contains trace amounts of ambition and one (1) bird.",
+      "You clicked the crow. That says more about you than about me.",
+      "You could close this tab. You won't. I respect that.",
+      "Poke around. Nothing here bites. Except me, situationally.",
+      "Welcome. There's no newsletter. There's just this.",
     ],
   };
+
+  // Pages where the crow always shows up, uninvited.
+  var CROW_ALWAYS = ["movies"];
 
   function currentPageKey() {
     var key = document.body.getAttribute("data-crow-page");
@@ -169,6 +171,7 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
     return h >>> 0;
   }
   function crowShouldAppear(pageKey) {
+    if (CROW_ALWAYS.indexOf(pageKey) !== -1) return true;
     var day = new Date().toISOString().slice(0, 10);
     return hashStr(pageKey + "|" + day) % 100 < 55; // ~55% of days
   }

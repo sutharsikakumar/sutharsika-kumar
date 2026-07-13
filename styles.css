@@ -67,6 +67,20 @@
   --tag-nonfiction:   #f4ecbe;
   --tag-neutral:      #e2e1da;
 
+  /* Distinct label tints — one per movie genre / tag (see movies.js) */
+  --tint-1:  #e6ddf6;  /* lavender */
+  --tint-2:  #f6d9de;  /* rose */
+  --tint-3:  #d6e8d1;  /* sage */
+  --tint-4:  #f4ecbe;  /* butter */
+  --tint-5:  #d3e5f3;  /* sky */
+  --tint-6:  #fadfc9;  /* apricot */
+  --tint-7:  #cfe9e2;  /* mint */
+  --tint-8:  #f0d8ee;  /* orchid */
+  --tint-9:  #dfe2c6;  /* olive */
+  --tint-10: #f7d6cd;  /* coral */
+  --tint-11: #dcd9f0;  /* periwinkle */
+  --tint-12: #ece0cd;  /* tan */
+
   /* Accent scores */
   --score-good:    #3f8f5b;
   --score-note:    #4b6ea8;
@@ -298,6 +312,25 @@ strong { font-weight: 650; }
   font-size: var(--fs-xs);
   color: var(--ink-muted);
   white-space: nowrap;
+}
+
+/* Tinted pills / tags — .tint-N is applied by movies.js, one hue per label. */
+.pill--cat.tint-1,  .tag.tint-1  { background: var(--tint-1); }
+.pill--cat.tint-2,  .tag.tint-2  { background: var(--tint-2); }
+.pill--cat.tint-3,  .tag.tint-3  { background: var(--tint-3); }
+.pill--cat.tint-4,  .tag.tint-4  { background: var(--tint-4); }
+.pill--cat.tint-5,  .tag.tint-5  { background: var(--tint-5); }
+.pill--cat.tint-6,  .tag.tint-6  { background: var(--tint-6); }
+.pill--cat.tint-7,  .tag.tint-7  { background: var(--tint-7); }
+.pill--cat.tint-8,  .tag.tint-8  { background: var(--tint-8); }
+.pill--cat.tint-9,  .tag.tint-9  { background: var(--tint-9); }
+.pill--cat.tint-10, .tag.tint-10 { background: var(--tint-10); }
+.pill--cat.tint-11, .tag.tint-11 { background: var(--tint-11); }
+.pill--cat.tint-12, .tag.tint-12 { background: var(--tint-12); }
+
+.tag[class*="tint-"] {
+  border-color: transparent;
+  color: var(--ink);
 }
 
 /* ------------------------------------------------------------------ *

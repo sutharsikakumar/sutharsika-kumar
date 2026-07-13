@@ -7,21 +7,41 @@
 
   var MOVIES = Array.isArray(window.MOVIES) ? window.MOVIES : [];
 
-  // Restrained genre → category-tint mapping (falls back to neutral).
+  // Every genre and every tag gets its own hue from the 12-slot tint
+  // palette in styles.css. Curated so the labels actually in the archive
+  // never collide; anything new falls back to a stable hash of its name.
   var GENRE_TINT = {
-    "sci-fi": "science", "science fiction": "science", "documentary": "advice",
-    "comedy": "nonfiction", "romance": "nonfiction", "horror": "fiction",
-    "thriller": "fiction", "drama": "neutral", "animation": "science",
-    "adventure": "advice",
+    "animation": 1, "romance": 2, "adventure": 3, "dramedy": 4,
+    "sci-fi": 5, "science fiction": 5, "family": 6, "documentary": 7,
+    "musical": 8, "comedy": 9, "horror": 10, "mystery": 11, "drama": 12,
   };
+  var TAG_TINT = {
+    "animation": 1, "exciting": 2, "must-watch": 4, "funny": 6,
+    "education": 7, "good casting": 8, "empowering": 10, "mystery": 11,
+  };
+  var TINT_COUNT = 12;
 
   var els = {};
   var state = { q: "", genre: "all", status: "all", sort: "year-desc" };
   var lastFocused = null;
 
-  function tintFor(genre) {
-    return GENRE_TINT[(genre || "").toLowerCase()] || "neutral";
+  function hashStr(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
   }
+
+  function tintClass(label, map) {
+    var key = String(label || "").toLowerCase().trim();
+    if (!key) return "";
+    var slot = map[key] || (hashStr(key) % TINT_COUNT) + 1;
+    return "tint-" + slot;
+  }
+  function genreTint(genre) { return tintClass(genre, GENRE_TINT); }
+  function tagTint(tag) { return tintClass(tag, TAG_TINT); }
 
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -73,14 +93,14 @@
         ? '<span class="rating rating--empty" aria-label="Unrated">–</span>'
         : '<span class="rating" aria-label="Rating ' + m.rating + ' of 10">' + m.rating + '</span>';
       var tags = m.tags.slice(0, 2).map(function (t) {
-        return '<span class="tag">' + esc(t) + '</span>';
+        return '<span class="tag ' + tagTint(t) + '">' + esc(t) + '</span>';
       }).join("");
       var extra = m.tags.length > 2 ? '<span class="tag">+' + (m.tags.length - 2) + '</span>' : "";
 
       return (
         '<button class="archive__row" type="button" data-id="' + esc(m.id) + '" aria-expanded="false">' +
         '<span class="cell-title">' + esc(m.title) + '</span>' +
-        '<span class="cell-genre"><span class="pill pill--cat pill--' + tintFor(primaryGenre) + '">' + esc(primaryGenre.toLowerCase()) + '</span></span>' +
+        '<span class="cell-genre"><span class="pill pill--cat ' + genreTint(primaryGenre) + '">' + esc(primaryGenre.toLowerCase()) + '</span></span>' +
         '<span class="cell-year">' + m.year + '</span>' +
         '<span class="cell-dir col-hide-md">' + esc(m.director) + '</span>' +
         '<span class="cell-rating-wrap">' + ratingCell + '</span>' +
@@ -98,7 +118,7 @@
 
     els.drawerTitle.textContent = m.title;
     els.drawerMeta.innerHTML =
-      '<span class="pill pill--cat pill--' + tintFor(m.genre[0]) + '">' + esc((m.genre[0] || "").toLowerCase()) + '</span>' +
+      '<span class="pill pill--cat ' + genreTint(m.genre[0]) + '">' + esc((m.genre[0] || "").toLowerCase()) + '</span>' +
       '<span>' + m.year + '</span><span>·</span>' +
       '<span>' + fmtRuntime(m.runtime) + '</span><span>·</span>' +
       '<span>' + esc(m.director) + '</span>';
@@ -121,7 +141,9 @@
 
     els.drawerReview.textContent = m.note && m.note.trim() ? m.note : "No note yet.";
     els.drawerTags.innerHTML = m.tags.length
-      ? m.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("")
+      ? m.tags.map(function (t) {
+          return '<span class="tag ' + tagTint(t) + '">' + esc(t) + '</span>';
+        }).join("")
       : '<span class="tag">no tags</span>';
 
     // mark the active row
