@@ -129,6 +129,14 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
       "Comprehension is optional. I live here and understand nothing.",
       "Liking it for no reason is the entire system working correctly.",
     ],
+    soccer: [
+      "Kick the ball, then colour the graph. A balanced life.",
+      "I have watched this sport from a lamppost. Nobody passes to the bird.",
+      "Every team is a graph. Most of them are not connected.",
+      "Showing up badly, repeatedly, is the whole algorithm.",
+      "Badminton is soccer for people with better wrists.",
+      "Four vertices, one shuttlecock, no conclusions yet.",
+    ],
     default: [
       "Forty-seven tabs, and yet you opened another. Bold.",
       "This site contains trace ambition and exactly one (1) bird.",
@@ -140,7 +148,7 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
   };
 
   // Pages where the crow always shows up, uninvited.
-  var CROW_ALWAYS = ["movies"];
+  var CROW_ALWAYS = ["movies", "soccer"];
 
   function currentPageKey() {
     var key = document.body.getAttribute("data-crow-page");
