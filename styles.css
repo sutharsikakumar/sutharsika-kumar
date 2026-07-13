@@ -1290,6 +1290,14 @@ a.footer-item:hover, a.footer-item:focus-visible {
   font-style: italic;
   max-width: 66ch;
 }
+.post-body blockquote p:last-of-type { margin-bottom: 0; }
+.post-body blockquote cite {
+  display: block;
+  margin-top: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-style: normal;
+}
 .post-body code {
   font-family: var(--font-mono);
   font-size: 0.88em;
