@@ -117,36 +117,6 @@ window.BOOKS = [
 
   // ---- Want to read --------------------------------------------------
   {
-    id: "the-song-of-achilles",
-    title: "The Song of Achilles",
-    author: "Madeline Miller",
-    year: 2011,
-    read: null,
-    rating: null,
-    cover: null,
-    review: "",
-    quote: "",
-    notes:
-      "Greek mythology again, but grown up — the Iliad retold through Patroclus. Everyone says it wrecks you.",
-    themes: ["greek-mythology", "retelling", "to-read"],
-    status: "to-read",
-  },
-  {
-    id: "circe",
-    title: "Circe",
-    author: "Madeline Miller",
-    year: 2018,
-    read: null,
-    rating: null,
-    cover: null,
-    review: "",
-    quote: "",
-    notes:
-      "The witch from the Odyssey gets her own story. Feels like the natural next step after Percy Jackson.",
-    themes: ["greek-mythology", "retelling", "to-read"],
-    status: "to-read",
-  },
-  {
     id: "the-trial",
     title: "The Trial",
     author: "Franz Kafka",
