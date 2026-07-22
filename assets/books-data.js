@@ -122,7 +122,7 @@ window.BOOKS = [
     author: "Franz Kafka",
     year: 1925,
     read: null,
-    rating: null,
+    rating: 6,
     cover: null,
     review: "",
     quote: "",
