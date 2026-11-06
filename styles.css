@@ -1299,6 +1299,7 @@ a.footer-item:hover, a.footer-item:focus-visible {
   width: 100%;
   color: var(--ink);
 }
+.work-row[hidden] { display: none; }
 .work-meta { font-family: var(--font-mono); color: var(--ink-muted); font-size: var(--fs-xs); }
 
 /* ------------------------------------------------------------------ *

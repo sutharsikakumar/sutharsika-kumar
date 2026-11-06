@@ -97,23 +97,6 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
       "Curiosity is rarely fatal. Proceed.",
       "You have been here four minutes. That constitutes a body of work.",
     ],
-    bookshelf: [
-      "A shelf is an argument. You are permitted to disagree.",
-      "You are already choosing which one to borrow indefinitely.",
-      "Nobody has finished every book they own. This is a universal law.",
-      "Scanning for one you've read, to feel briefly validated. Understandable.",
-      "Add one to the list. Neglect it for a year. This is the ritual.",
-      "I cannot read. I admire the covers on formal grounds.",
-    ],
-    movies: [
-      "Two hours, no wings, and still humanity's finest output.",
-      "You will dispute one of these ratings and think about it all day.",
-      "Not a plot hole. A plot lifestyle.",
-      "Insufficient birds throughout. A recurring flaw in the medium.",
-      "You scrolled for one you'd seen. Everyone does.",
-      "I saw the twist from a power line six blocks away.",
-      "Everything is a 7. Accept this and be free.",
-    ],
     photography: [
       "Take your time. The images will wait. I will not.",
       "There is a bird in one of these. We are no longer speaking.",
@@ -129,14 +112,6 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
       "Comprehension is optional. I live here and understand nothing.",
       "Liking it for no reason is the entire system working correctly.",
     ],
-    soccer: [
-      "Kick the ball, then colour the graph. A balanced life.",
-      "I have watched this sport from a lamppost. Nobody passes to the bird.",
-      "Every team is a graph. Most of them are not connected.",
-      "Showing up badly, repeatedly, is the whole algorithm.",
-      "Badminton is soccer for people with better wrists.",
-      "Four vertices, one shuttlecock, no conclusions yet.",
-    ],
     default: [
       "Forty-seven tabs, and yet you opened another. Bold.",
       "This site contains trace ambition and exactly one (1) bird.",
@@ -148,7 +123,7 @@ const GOOGLE_SCHOLAR_URL = "https://scholar.google.com/citations?user=6qV586oAAA
   };
 
   // Pages where the crow always shows up, uninvited.
-  var CROW_ALWAYS = ["movies", "soccer"];
+  var CROW_ALWAYS = [];
 
   function currentPageKey() {
     var key = document.body.getAttribute("data-crow-page");
