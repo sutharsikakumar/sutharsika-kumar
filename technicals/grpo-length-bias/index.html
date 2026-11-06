@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Same Accuracy, Different Mistakes — Sutharsika Kumar</title>
+  <meta name="description" content="A toy experiment on the length bias hiding in GRPO: two losses, the same accuracy, differently shaped mistakes." />
+  <link rel="icon" href="../../assets/favicon.png" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <a class="btn btn--home" href="/">Home</a>
+    </header>
+
+    <article>
+      <header class="post-header">
+        <h1 class="post-title">Same Accuracy, Different Mistakes: The Length Bias Hiding in GRPO</h1>
+        <p class="post-dateline">November 2026</p>
+      </header>
+
+      <div class="post-body">
+        <blockquote>
+          <p>“All models are wrong, but some are useful.”</p>
+          <cite>— George Box</cite>
+        </blockquote>
+
+        <p>A week ago I could not have told you what GRPO was. So I did what I usually do: I built the smallest version I could and broke it.</p>
+
+        <p>This post is about one line in the GRPO loss, dividing each response’s loss by its own length. In a toy model, that line changed the shape of the model’s mistakes. Both versions reached about 97% accuracy. Only one let its wrong answers grow longer.</p>
+
+        <h2>The bias</h2>
+
+        <p>GRPO samples a group of \(G\) responses per prompt, scores each against its siblings, and averages the loss over each response’s own length:</p>
+
+        $$\mathcal{L}_{\text{GRPO}} = -\frac{1}{G} \sum_{i=1}^{G} \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \hat{A}_i \, \log \pi_\theta(o_{i,t})$$
+
+        <p>Each token’s weight is \(\hat{A}_i / (G\,|o_i|)\). Every response gets the same total push, but a long one spreads it thin. For a wrong answer (\(\hat{A}_i &lt; 0\)), that means longer is cheaper: a 2-token wrong answer is penalized at \(|\hat{A}_i|/2G\) per token, an 8-token one at \(|\hat{A}_i|/8G\). The loss quietly says: if you are going to be wrong, be wrong at length.</p>
+
+        <p>The Dr. GRPO paper fixes this by dividing by a fixed constant instead, and dropping the std term.</p>
+
+        <h2>The toy</h2>
+
+        <p>The policy is a lookup table: 10 positions, 3 actions (good token, bad token, stop), one softmax per position. No transformer, so the loss is the only thing left to blame. A response is correct if it has at least one token and no bad tokens.</p>
+
+        <p>That “at least one token” clause came from a bug. My first reward only checked for bad tokens, and the model learned to say nothing at all. Reward hacking, in a 30-parameter model.</p>
+
+        <p>I trained both losses with Adam for 300 steps, with groups of 36 across 5 seeds. Every 10 steps I froze the model and sampled 500 fresh responses to measure accuracy and wrong-answer length.</p>
+
+        <h2>Results</h2>
+
+        <figure class="post-figure">
+          <img src="image.png" alt="Left: wrong-answer length during training. Middle: accuracy during training. Right: wrong-answer length at the last step with enough wrong answers to measure." />
+          <figcaption>Left: wrong-answer length (mean of 5 seeds, ±1 std). Middle: accuracy. Right: wrong-answer length at the last step where both variants still had enough wrong answers to measure.</figcaption>
+        </figure>
+
+        <p>Both start with wrong answers about 2.03 tokens long. By step 40, GRPO’s have drifted to about 2.35, while the Dr. GRPO-style ones have shrunk to about 1.47. Accuracy is nearly identical throughout: about 93% at step 40, 97% by step 60.</p>
+
+        <p>If I had only looked at accuracy, I would have called the two losses the same. The curves stop around step 50 to 70 because by then fewer than 20 of 500 samples are wrong, and I would rather hide those points than plot noise.</p>
+
+        <h2>Limits</h2>
+
+        <p>This is a toy: a lookup table, responses of at most 10 tokens, 5 seeds, and a window of about 50 steps where the gap is measurable. My second variant also changes two things at once (length and std), so it does not isolate either. Next I want to ablate each alone and try the same comparison on a small open model with TRL.</p>
+
+        <p>One division does not show up in accuracy. You only find it by asking what the mistakes look like, not just how many there are. I would rather understand one equation deeply than recite fifty.</p>
+
+        <p><strong>Code:</strong> <a href="https://github.com/sutharsikakumar/grpo-length-bias">github.com/sutharsikakumar/grpo-length-bias</a></p>
+
+        <h2>Sources</h2>
+        <ul>
+          <li>Liu et al. <a href="https://arxiv.org/abs/2503.20783">Understanding R1-Zero-Like Training: A Critical Perspective</a> (2025). The Dr. GRPO paper.</li>
+          <li>Shao et al. <a href="https://arxiv.org/abs/2402.03300">DeepSeekMath</a> (2024). Introduced GRPO.</li>
+        </ul>
+      </div>
+
+      <nav class="post-nav">
+        <a href="../">← All technical</a>
+      </nav>
+    </article>
+
+    <footer class="footer-links" data-footer></footer>
+  </main>
+</body>
+</html>
