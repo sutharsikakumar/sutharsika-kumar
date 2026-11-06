@@ -1347,6 +1347,13 @@ a.footer-item:hover, a.footer-item:focus-visible {
   max-width: 66ch;
 }
 .post-body pre code { background: none; padding: 0; }
+.post--centered { width: 100%; max-width: 66ch; margin: 0 auto; }
+.post--centered .post-header { text-align: center; }
+.post--centered .post-body p,
+.post--centered .post-body ul { max-width: none; }
+.post--centered .post-figure { margin-left: 50%; transform: translateX(-50%); width: min(94vw, 900px); }
+.post--centered .post-figure figcaption { text-align: center; }
+.post--centered .katex-display { overflow-x: auto; overflow-y: hidden; }
 .post-figure { margin: var(--sp-6) 0; }
 .post-figure img { display: block; width: 100%; height: auto; }
 .post-figure figcaption {
