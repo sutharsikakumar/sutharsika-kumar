@@ -1302,6 +1302,8 @@ a.footer-item:hover, a.footer-item:focus-visible {
 .work-row > a:hover, .work-row > a:focus-visible { text-decoration: none; }
 .work-row[hidden] { display: none; }
 .books-read { margin-bottom: var(--sp-7); }
+.books-list { list-style: disc; padding-left: var(--sp-5); font-size: var(--fs-sm); }
+.books-list li { margin-bottom: var(--sp-1); }
 .books-title { font-size: var(--fs-h2); margin-bottom: var(--sp-3); }
 .work-meta { font-family: var(--font-mono); color: var(--ink-muted); font-size: var(--fs-xs); }
 
