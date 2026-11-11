@@ -19,7 +19,7 @@
   <meta name="twitter:image" content="https://sutharsikakumar.org/assets/world-model-fallback.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/shell.css">
   <link rel="stylesheet" href="/assets/home.css">
   <script type="module" src="/assets/shell.js"></script>
@@ -55,8 +55,8 @@
     try {
       const { mountWorldModel } = await import('/assets/world-model.js');
       const dispose = await mountWorldModel(root);          // null → WebGL unavailable → poster stays
-      if (dispose) addEventListener('pagehide', dispose, { once: true });
-    } catch (e) { /* scene failed to build: the static poster remains */ }
+      if (dispose) addEventListener('pagehide', dispose, { once: true }); else root.classList.add('no-gl');
+    } catch (e) { root.classList.add('no-gl'); /* scene failed to build: show the static poster */ }
   };
   start();   // begin building immediately (it yields between chunks); waiting for load + idle left the poster frozen for seconds
 </script>

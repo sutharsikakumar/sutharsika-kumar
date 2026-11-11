@@ -2,7 +2,7 @@
 :root {
   --s-bg:#fcfcfa; --s-ink:#141414; --s-mute:#8d8d88; --s-hair:#d9d9d4;
   --s-slate:#474d64; --s-teal:#509777; --s-green:#6fb16f; --s-lime:#dad881; --s-cream:#efeeba;
-  --s-serif:"Times New Roman",Times,serif;
+  --s-serif:"EB Garamond",Garamond,"Cormorant Garamond",Georgia,serif;
   --s-mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 .shell-page { margin:0; background:var(--s-bg); color:var(--s-ink); font-family:var(--s-mono); }
@@ -21,7 +21,7 @@
 
 /* inner pages */
 .site-hdr { max-width:760px; margin:0 auto; padding:32px 24px 0; display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px 32px; }
-.site-hdr__name { font-family:var(--s-serif); font-size:26px; letter-spacing:-.01em; color:var(--s-ink); text-decoration:none; }
+.site-hdr__name { font-family:var(--s-serif); font-size:29px; letter-spacing:-.01em; color:var(--s-ink); text-decoration:none; }
 .doc { max-width:760px; margin:0 auto; padding:72px 24px 24px; font-size:14px; line-height:1.75; }
 .doc h1 { font:400 clamp(30px,5vw,40px)/1.1 var(--s-serif); letter-spacing:-.01em; margin:0 0 12px; }
 .doc .lede { color:var(--s-mute); margin:0 0 48px; }
