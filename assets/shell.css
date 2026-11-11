@@ -3,7 +3,7 @@
   --s-bg:#fcfcfa; --s-ink:#141414; --s-mute:#8d8d88; --s-hair:#d9d9d4;
   --s-slate:#474d64; --s-teal:#509777; --s-green:#6fb16f; --s-lime:#dad881; --s-cream:#efeeba;
   --s-serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --s-mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --s-mono:"Newsreader",Georgia,"Times New Roman",serif;  /* name kept; everything is Newsreader now */
 }
 .shell-page { margin:0; background:var(--s-bg); color:var(--s-ink); font-family:var(--s-mono); }
 .shell-page button { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
@@ -13,7 +13,7 @@
   { outline:1px solid var(--s-ink); outline-offset:3px; }
 
 /* tabs: /About /Research … */
-.tabs { display:flex; flex-direction:column; gap:12px; font-family:var(--s-mono); font-size:15px; }
+.tabs { display:flex; flex-direction:column; gap:12px; font-family:var(--s-mono); font-size:18px; }
 .tabs a { color:var(--s-ink); text-decoration:none; width:max-content; }
 .tabs a::before { content:"/"; color:var(--s-mute); margin-right:.15em; }
 .tabs a:hover, .tabs a[aria-current] { color:var(--s-mute); }
@@ -22,10 +22,10 @@
 /* inner pages */
 .site-hdr { max-width:760px; margin:0 auto; padding:32px 24px 0; display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px 32px; }
 .site-hdr__name { font-family:var(--s-serif); font-size:26px; letter-spacing:-.01em; color:var(--s-ink); text-decoration:none; }
-.doc { max-width:760px; margin:0 auto; padding:72px 24px 24px; font-size:14px; line-height:1.75; }
+.doc { max-width:760px; margin:0 auto; padding:72px 24px 24px; font-size:18px; line-height:1.6; }
 .doc h1 { font:400 clamp(30px,5vw,40px)/1.1 var(--s-serif); letter-spacing:-.01em; margin:0 0 12px; }
 .doc .lede { color:var(--s-mute); margin:0 0 48px; }
-.doc h2 { font:400 13px var(--s-mono); color:var(--s-mute); text-transform:lowercase; letter-spacing:.04em; margin:48px 0 0; padding-bottom:8px; border-bottom:1px solid var(--s-hair); }
+.doc h2 { font:400 15px var(--s-mono); color:var(--s-mute); text-transform:lowercase; letter-spacing:.04em; margin:48px 0 0; padding-bottom:8px; border-bottom:1px solid var(--s-hair); }
 .doc h2::before { content:"/"; margin-right:.15em; }
 .doc p { margin:16px 0 0; }
 .doc a { color:var(--s-ink); text-decoration:underline; text-decoration-color:var(--s-hair); text-underline-offset:3px; }
