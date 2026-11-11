@@ -73,3 +73,8 @@
 @media (prefers-reduced-motion: no-preference) { .find:not([hidden]) { animation:find-in .12s ease-out; } }
 @keyframes find-in { from { opacity:0; } }
 .site-footer-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 40px; }
+
+/* social icons */
+.social { display:flex; gap:16px; align-items:center; }
+.social a { display:inline-flex; color:var(--s-mute); text-decoration:none; }
+.social a:hover, .social a:focus-visible { color:var(--s-ink); }
