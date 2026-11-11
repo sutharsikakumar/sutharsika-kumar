@@ -23,6 +23,7 @@ export const PAGES = [
 
 // Footer links (order is display order).
 export const SOCIAL = [
+  { label: 'Email',          url: 'mailto:sutharsika.kumar07@gmail.com' },
   { label: 'GitHub',         url: 'https://github.com/sutharsikakumar' },
   { label: 'Twitter',        url: 'https://x.com/sutharsikakumar' },
   { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=6qV586oAAAAJ&hl=en' },
