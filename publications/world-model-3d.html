@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sutharsika Kumar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#fcfcfa; --ink:#141414; --mute:#8d8d88; --hair:#d9d9d4;
+    --serif:"Times New Roman",Times,serif;
+    --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;  
+    --slate:#474d64; --teal:#509777; --green:#6fb16f; --lime:#dad881; --cream:#efeeba;
+  }
+  html,body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--serif); }
+  button { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
+
+  /* ---- layout: animation left, name + tabs right ---- */
+  .page { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr); min-height:100vh; }
+  .wm { position:relative; height:100vh; min-height:520px; overflow:hidden; }
+  .wm canvas { position:absolute; inset:0; width:100%; height:100%; cursor:grab; touch-action:none; }
+  .wm canvas:active { cursor:grabbing; }
+  .wm svg.ov { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+  .wm .eq { position:absolute; font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink);
+            white-space:nowrap; pointer-events:none; text-align:center; transform:translateX(-50%); }
+  .wm .eq sub { font-size:.75em; }
+  .wm .eps { display:flex; justify-content:center; align-items:center; gap:10px; margin-top:10px; pointer-events:auto; }
+  .wm .eps input { -webkit-appearance:none; appearance:none; width:150px; height:1px; background:var(--ink); outline:none; margin:0; }
+  .wm .eps input::-webkit-slider-thumb { -webkit-appearance:none; width:9px; height:9px; background:var(--bg); border:1px solid var(--ink); cursor:pointer; }
+  .wm .eps input::-moz-range-thumb { width:8px; height:8px; border-radius:0; background:var(--bg); border:1px solid var(--ink); cursor:pointer; }
+  .wm .eps output { min-width:32px; text-align:left; }
+  .side { display:flex; flex-direction:column; justify-content:center; padding:0 clamp(24px,5vw,80px) 0 clamp(8px,2vw,24px); }
+  .side .name { font-family:var(--serif); font-weight:400; font-size:clamp(34px,3.6vw,52px); letter-spacing:-.01em; line-height:1.05; margin:0 0 36px; }
+  .tabs { display:flex; flex-direction:column; gap:12px; font-family:var(--mono); font-size:15px; }
+  .tabs a { color:var(--ink); text-decoration:none; width:max-content; }
+  .tabs a::before { content:"/"; color:var(--mute); margin-right:.15em; }
+  .tabs a:hover { color:var(--mute); }
+
+  @media (max-width:800px){
+    .page { grid-template-columns:1fr; }
+    .side { order:-1; padding:40px 24px 0; justify-content:flex-start; }
+    .side .name { margin-bottom:18px; }
+    .tabs { flex-direction:row; flex-wrap:wrap; gap:8px 18px; }
+    .wm { height:58vh; min-height:400px; }
+  }
+
+  /* ---- find popup (⌘F) ---- */
+  .find { position:fixed; inset:0; z-index:50; display:flex; flex-direction:column; align-items:center; justify-content:center;
+          background:rgba(234,234,232,.72); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+          font-family:var(--mono); font-size:14px; letter-spacing:.01em; }
+  .find[hidden] { display:none; }
+  .find .card { width:min(620px,92vw); background:#fff; border-radius:10px; padding:20px 18px 18px; box-sizing:border-box;
+                box-shadow:0 1px 2px rgba(0,0,0,.04); }
+  .find .q { display:flex; align-items:baseline; padding:0 6px 26px; }
+  .find .q input { flex:1; border:0; outline:none; font:inherit; color:var(--ink); background:none; padding:0; caret-color:var(--ink); }
+  .find ul { list-style:none; margin:0; padding:0; min-height:40px; }
+  .find li { display:flex; justify-content:space-between; padding:9px 6px; border-radius:6px; cursor:pointer; }
+  .find li .p { color:var(--mute); }
+  .find li.on { background:#f2f2ef; }
+  .find li.empty { color:var(--mute); cursor:default; }
+  .find .ft { display:flex; justify-content:space-between; color:var(--mute); padding:26px 6px 0; }
+  .find .ft button { color:var(--mute); margin-left:28px; }
+  .find .ft button:hover { color:var(--ink); }
+  .find .close { margin-top:clamp(40px,14vh,140px); color:var(--ink); }
+
+  @media (max-width:700px){
+    .hdr { grid-template-columns:1fr; justify-items:center; row-gap:6px; } .hdr .phase { display:none; }
+    .hdr .name, .hdr .findbtn { grid-column:1; justify-self:center; }
+    .wm { height:56vh; min-height:380px; } .wm .foot { display:none; } .wm .tag.ring { display:none; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="wm" id="wm">
+    <canvas id="wm-gl" aria-label="3D world in a box: fully rendered within an epsilon neighborhood of a moving agent, diffused into noisy particles beyond it"></canvas>
+    <svg class="ov" id="wm-ov">
+      <rect id="wm-box" width="12" height="12" fill="none" stroke="#141414" stroke-width="1"/>
+    </svg>
+    <div class="eq" id="wm-eq">
+      x<sub>t</sub> = √ᾱ x<sub>0</sub> + √(1−ᾱ) ε<br>
+      √(1−ᾱ) = clamp((‖x − agent‖ − ε) / Δ, 0, 1)
+      <label class="eps">ε <input id="wm-eps" type="range" min="0.14" max="0.85" step="0.01" value="0.38" aria-label="epsilon"><output id="wm-epsv">0.38</output></label>
+    </div>
+  </section>
+
+  <aside class="side">
+    <h1 class="name">Sutharsika Kumar</h1>
+    <nav class="tabs">
+      <a href="/about">About</a>
+      <a href="/research">Research</a>
+      <a href="/projects">Projects</a>
+      <a href="/writing">Writing</a>
+      <a href="/cv">CV</a>
+    </nav>
+  </aside>
+</main>
+
+<div class="find" id="find" hidden role="dialog" aria-modal="true" aria-label="Find">
+  <div class="card">
+    <label class="q"><span>sutharsika/</span><input id="find-q" autocomplete="off" spellcheck="false" aria-label="Search pages"></label>
+    <ul id="find-list" role="listbox"></ul>
+    <div class="ft">
+      <span>[↓] [↑]<button id="find-help">[?] Shortcuts</button></span>
+      <span>[enter] to visit</span>
+    </div>
+  </div>
+  <button class="close" id="find-close">Close [esc]</button>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('wm'), cv = document.getElementById('wm-gl');
+  const gl = cv.getContext('webgl', { antialias: true });
+  if (!gl) { cv.replaceWith(Object.assign(document.createElement('p'), { textContent: 'WebGL is not available.' })); return; }
+  const DERIV = !!gl.getExtension('OES_standard_derivatives');
+
+  // ---------------------------------------------------------------- palette
+  const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+  const SLATE = hex('#474d64'), TEAL = hex('#509777'), GREEN = hex('#6fb16f'), LIME = hex('#dad881'),
+        CREAM = hex('#efeeba'), INK = hex('#141414'), BG = hex('#fcfcfa');
+  const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  const ramp = t => {                                   // elevation → palette
+    const S = [TEAL, GREEN, LIME, CREAM], x = Math.min(.999, Math.max(0, t)) * (S.length - 1), i = Math.floor(x);
+    return mix(S[i], S[i + 1], x - i);
+  };
+
+  // ---------------------------------------------------------------- rng + noise
+  let seed = 11;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const gauss = () => { let u = 0; while (!u) u = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(6.2831853 * rnd()); };
+  const h2 = (i, j) => { const n = Math.sin(i * 127.1 + j * 311.7) * 43758.5453; return n - Math.floor(n); };
+  function vnoise(x, z) {
+    const i = Math.floor(x), j = Math.floor(z), fx = x - i, fz = z - j, u = fx * fx * (3 - 2 * fx), v = fz * fz * (3 - 2 * fz);
+    const a = h2(i, j), b = h2(i + 1, j), c = h2(i, j + 1), d = h2(i + 1, j + 1);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  const fbm = (x, z) => { let s = 0, a = .5, f = 1; for (let o = 0; o < 5; o++) { s += a * (vnoise(x * f, z * f) - .5); f *= 2.03; a *= .5; } return s; };
+
+  // ---------------------------------------------------------------- terrain
+  const WATER = -.075;
+  const height = (x, z) => {
+    const r = Math.max(Math.abs(x), Math.abs(z));
+    return .16 * Math.sin(2.1 * x + .3) * Math.cos(1.7 * z) + .05 * Math.sin(5 * x + 3 * z) - .045 * (x + z)
+         + .2 * fbm(x * 2.3 + 5.1, z * 2.3 + 9.7) - .35 * Math.max(0, r - .8);
+  };
+  const hy = (x, z) => Math.max(WATER, height(x, z));
+  const land = (x, z) => { const y = height(x, z); return (y - WATER) / .34; };
+  function groundCol(x, z) {
+    const y = height(x, z);
+    if (y < WATER) return mix(mix(SLATE, BG, .42), SLATE, Math.min(1, (WATER - y) / .12)); 
+    if (y < WATER + .018) return mix(LIME, CREAM, .55);                              
+    return mix(ramp(land(x, z)), [0, 0, 0], (vnoise(x * 40, z * 40) - .5) * .06);
+  }
+
+
+  const GP = [], GN = [], GC = [];         
+  function tri(a, b, c, na, nb, nc, ca, cb, cc, flag = 0) {
+    GP.push(...a, ...b, ...c); GN.push(...na, ...nb, ...nc); GC.push(...ca, flag, ...cb, flag, ...cc, flag);
+  }
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const norm = a => { const l = Math.hypot(...a) || 1; return a.map(v => v / l); };
+  const ftri = (a, b, c, col, flag = 0) => { const n = norm(cross(sub(b, a), sub(c, a))); tri(a, b, c, n, n, n, col, col, col, flag); };
+
+  // terrain grid (smooth normals, vertex colours)
+  const M = 200, tn = (x, z) => { const e = .004; return norm([hy(x - e, z) - hy(x + e, z), 2 * e, hy(x, z - e) - hy(x, z + e)]); };
+  const V = [];
+  for (let i = 0; i <= M; i++) { V[i] = []; for (let j = 0; j <= M; j++) {
+    const x = i / M * 2 - 1, z = j / M * 2 - 1;
+    V[i][j] = { p: [x, hy(x, z), z], n: tn(x, z), c: groundCol(x, z), in: true, w: height(x, z) < WATER };
+  } }
+  for (let i = 0; i < M; i++) for (let j = 0; j < M; j++) {
+    const a = V[i][j], b = V[i][j + 1], c = V[i + 1][j], d = V[i + 1][j + 1];
+    if (!(a.in && b.in && c.in && d.in)) continue;
+    const f = (a.w && b.w && c.w && d.w) ? 0 : 1;
+    tri(a.p, b.p, c.p, a.n, b.n, c.n, a.c, b.c, c.c, f);
+    tri(b.p, d.p, c.p, b.n, d.n, c.n, b.c, d.c, c.c, f);
+  }
+  const TERRAIN_VERTS = GP.length / 3;
+
+  // icosphere (subdiv 1) for foliage / rocks
+  const ICO = (() => {
+    const t = (1 + Math.sqrt(5)) / 2;
+    let v = [[-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0], [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t], [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]].map(norm);
+    let f = [[0, 11, 5], [0, 5, 1], [0, 1, 7], [0, 7, 10], [0, 10, 11], [1, 5, 9], [5, 11, 4], [11, 10, 2], [10, 7, 6], [7, 1, 8],
+             [3, 9, 4], [3, 4, 2], [3, 2, 6], [3, 6, 8], [3, 8, 9], [4, 9, 5], [2, 4, 11], [6, 2, 10], [8, 6, 7], [9, 8, 1]];
+    const base = f.map(([a, b, c]) => [v[a], v[b], v[c]]);
+    const s1 = [];
+    for (const [a, b, c] of base) {
+      const ab = norm(a.map((x, i) => x + b[i])), bc = norm(b.map((x, i) => x + c[i])), ca = norm(c.map((x, i) => x + a[i]));
+      s1.push([a, ab, ca], [b, bc, ab], [c, ca, bc], [ab, bc, ca]);
+    }
+    return { 0: base, 1: s1 };
+  })();
+  function blob(c, r, col, { sub = 1, squash = .85, wob = .16, vary = .05 } = {}) {
+    const k = [rnd() * 9 + 3, rnd() * 9 + 3, rnd() * 9 + 3];
+    const tf = u => { const s = 1 + wob * Math.sin(u[0] * k[0] + u[1] * k[1] + u[2] * k[2]);
+      return [c[0] + u[0] * r * s, c[1] + u[1] * r * s * squash, c[2] + u[2] * r * s]; };
+    for (const [a, b, d] of ICO[sub]) ftri(tf(a), tf(b), tf(d), mix(col, rnd() < .5 ? BG : SLATE, rnd() * vary));
+  }
+  function cone(cx, by, cz, r, h, col, seg = 9, rot = 0) {
+    const top = [cx, by + h, cz];
+    for (let s = 0; s < seg; s++) {
+      const a0 = rot + s / seg * 6.2832, a1 = rot + (s + 1) / seg * 6.2832;
+      ftri(top, [cx + Math.cos(a1) * r, by, cz + Math.sin(a1) * r], [cx + Math.cos(a0) * r, by, cz + Math.sin(a0) * r],
+           mix(col, s % 2 ? BG : SLATE, .04));
+      // underside skirt so tiers read as layered
+      ftri([cx, by + h * .12, cz], [cx + Math.cos(a0) * r, by, cz + Math.sin(a0) * r], [cx + Math.cos(a1) * r, by, cz + Math.sin(a1) * r], mix(col, SLATE, .35));
+    }
+  }
+  function cyl(cx, by, cz, r, h, col, seg = 6) {
+    for (let s = 0; s < seg; s++) {
+      const a0 = s / seg * 6.2832, a1 = (s + 1) / seg * 6.2832;
+      const p00 = [cx + Math.cos(a0) * r, by, cz + Math.sin(a0) * r], p01 = [cx + Math.cos(a1) * r, by, cz + Math.sin(a1) * r];
+      const p10 = [p00[0], by + h, p00[2]], p11 = [p01[0], by + h, p01[2]];
+      ftri(p00, p10, p01, col); ftri(p01, p10, p11, col);
+    }
+  }
+  const BARK = mix(SLATE, hex('#7b6a55'), .55);
+  const PINE = mix(SLATE, TEAL, .5);
+
+  function pine(x, z, s) {
+    const y = hy(x, z), h = (.085 + rnd() * .06) * s, r = (.026 + rnd() * .008) * s, rot = rnd() * 6;
+    cyl(x, y - .004, z, .0045 * s, h * .3, BARK);
+    const tiers = 3 + (rnd() < .5 ? 1 : 0);
+    for (let k = 0; k < tiers; k++) {
+      const f = k / tiers;
+      cone(x, y + h * (.16 + .62 * f), z, r * (1 - .62 * f), h * (.44 - .1 * f), mix(PINE, TEAL, f * .55 + rnd() * .08), 9, rot + k);
+    }
+  }
+  function leafy(x, z, s) {
+    const y = hy(x, z), h = (.045 + rnd() * .025) * s, r = (.022 + rnd() * .008) * s;
+    cyl(x, y - .004, z, .0042 * s, h * .9, BARK);
+    const base = [GREEN, mix(GREEN, LIME, .45), mix(TEAL, GREEN, .5)][Math.floor(rnd() * 3)];
+    const n = 4 + Math.floor(rnd() * 3);
+    blob([x, y + h + r * .5, z], r, base);
+    for (let k = 0; k < n; k++) {
+      const a = k / n * 6.2832 + rnd(), d = r * (.55 + rnd() * .25);
+      blob([x + Math.cos(a) * d, y + h + r * (.1 + rnd() * .5), z + Math.sin(a) * d], r * (.55 + rnd() * .25), mix(base, k % 2 ? LIME : TEAL, .15 + rnd() * .1));
+    }
+  }
+  function shrub(x, z) { const y = hy(x, z), r = .008 + rnd() * .008;
+    blob([x, y + r * .5, z], r, mix(TEAL, GREEN, rnd()), { squash: .7 }); }
+  function rock(x, z) { const y = hy(x, z), r = .01 + rnd() * .018;
+    blob([x, y + r * .2, z], r, mix(SLATE, CREAM, .45 + rnd() * .2), { sub: 0, squash: .55 + rnd() * .2, wob: .3, vary: .1 }); }
+
+  const spots = [];
+  const ok = (x, z, minD) => spots.every(s => Math.hypot(s[0] - x, s[1] - z) > minD);
+  function scatter(n, test, fn, minD, tries = 9000) {
+    for (let k = 0, t = 0; k < n && t < tries; t++) {
+      const x = rnd() * 1.84 - .92, z = rnd() * 1.84 - .92;
+      if (Math.max(Math.abs(x), Math.abs(z)) > .9 || height(x, z) < WATER + .012 || !test(land(x, z), x, z) || !ok(x, z, minD)) continue;
+      spots.push([x, z]); fn(x, z); k++;
+    }
+  }
+  // groves: cluster trees around a few centres for a natural look
+  const groves = Array.from({ length: 9 }, () => [rnd() * 1.4 - .7, rnd() * 1.4 - .7]);
+  const nearGrove = (x, z) => groves.some(g => Math.hypot(g[0] - x, g[1] - z) < .26);
+  scatter(110, (l, x, z) => l > .32 && l < .78 && (nearGrove(x, z) || rnd() < .25), (x, z) => pine(x, z, .85 + rnd() * .4), .034);
+  scatter(70, (l, x, z) => l > .05 && l < .45 && (nearGrove(x, z) || rnd() < .3), (x, z) => leafy(x, z, .85 + rnd() * .35), .04);
+  scatter(140, l => l > .03 && l < .6, shrub, .018);
+  scatter(55, l => l > .55 || rnd() < .12, rock, .02);
+  const NVERT = GP.length / 3;
+
+  // ---------------------------------------------------------------- particles = area-weighted samples of the same surfaces
+  const PP = [], PC = [], PN = [], PS = [];
+  const L = norm([-.4, .85, .35]);
+  const DENS = 9000;
+  for (let t = 0; t < NVERT; t += 3) {
+    const a = GP.slice(t * 3, t * 3 + 3), b = GP.slice(t * 3 + 3, t * 3 + 6), c = GP.slice(t * 3 + 6, t * 3 + 9);
+    const area = Math.hypot(...cross(sub(b, a), sub(c, a))) / 2;
+    let n = area * DENS * (t < TERRAIN_VERTS ? 1.15 : .75); n = Math.floor(n) + (rnd() < n % 1 ? 1 : 0);
+    const nrm = GN.slice(t * 3, t * 3 + 3), col = GC.slice(t * 4, t * 4 + 3);
+    const lit = .55 + .45 * Math.max(0, nrm[0] * L[0] + nrm[1] * L[1] + nrm[2] * L[2]) + .06 * nrm[1];
+    for (let k = 0; k < n; k++) {
+      let u = rnd(), v = rnd(); if (u + v > 1) { u = 1 - u; v = 1 - v; }
+      PP.push(a[0] + (b[0] - a[0]) * u + (c[0] - a[0]) * v, a[1] + (b[1] - a[1]) * u + (c[1] - a[1]) * v, a[2] + (b[2] - a[2]) * u + (c[2] - a[2]) * v);
+      PC.push(...col.map(x => Math.min(1, x * lit)));
+      PN.push(gauss(), gauss(), gauss()); PS.push(rnd());
+    }
+  }
+  const NPTS = PS.length;
+
+  // ---------------------------------------------------------------- GL plumbing
+  function prog(vs, fs) {
+    const p = gl.createProgram();
+    for (const [t, s] of [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]]) {
+      const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(sh);
+      gl.attachShader(p, sh);
+    }
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw gl.getProgramInfoLog(p);
+    const u = {}, a = {};
+    for (let i = 0; i < gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); i++) { const n = gl.getActiveUniform(p, i).name; u[n] = gl.getUniformLocation(p, n); }
+    for (let i = 0; i < gl.getProgramParameter(p, gl.ACTIVE_ATTRIBUTES); i++) { const n = gl.getActiveAttrib(p, i).name; a[n] = gl.getAttribLocation(p, n); }
+    return { p, u, a };
+  }
+  const buf = (d, usage = gl.STATIC_DRAW) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, d, usage); return b; };
+  let enabled = [];
+  function use(pg, attrs) {
+    gl.useProgram(pg.p);
+    enabled.forEach(l => gl.disableVertexAttribArray(l)); enabled = [];
+    for (const [name, b, size] of attrs) { const l = pg.a[name]; if (l === undefined) continue;
+      gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.enableVertexAttribArray(l); gl.vertexAttribPointer(l, size, gl.FLOAT, false, 0, 0); enabled.push(l); }
+  }
+
+  // surface: lit, ink contour lines, soft rim; cut at the ε boundary
+  const meshPg = prog(`
+    attribute vec3 aPos; attribute vec3 aNor; attribute vec4 aCol;
+    uniform mat4 uMVP;
+    varying vec3 vP; varying vec3 vN; varying vec4 vCol;
+    void main(){ vP = aPos; vN = aNor; vCol = aCol; gl_Position = uMVP * vec4(aPos, 1.); }`,
+  `${DERIV ? '#extension GL_OES_standard_derivatives : enable' : ''}
+    precision highp float;
+    uniform vec3 uAgent; uniform vec3 uEye; uniform float uEps;
+    varying vec3 vP; varying vec3 vN; varying vec4 vCol;
+    void main(){
+      float d = distance(vP.xz, uAgent.xz);
+      float a = 1. - smoothstep(uEps - .02, uEps, d);
+      if (a < .01) discard;
+      vec3 N = normalize(vN), L = normalize(vec3(-.4, .85, .35)), V = normalize(uEye - vP);
+      vec3 c = vCol.rgb * (.55 + .45 * max(dot(N, L), 0.)) + .06 * N.y;
+      ${DERIV ? `
+      float k = vP.y * 60.;
+      float w = abs(fract(k - .5) - .5) / max(fwidth(k), 1e-4);
+      c = mix(c, vec3(.08), (1. - smoothstep(0., 1.1, w)) * .2 * vCol.a);` : ''}
+      c = mix(c, vec3(.08), pow(1. - max(dot(N, V), 0.), 4.) * .22);
+      gl_FragColor = vec4(c, a);
+    }`);
+  const meshB = { pos: buf(new Float32Array(GP)), nor: buf(new Float32Array(GN)), col: buf(new Float32Array(GC)) };
+
+  // particles: linear-schedule forward diffusion beyond ε
+  const ptPg = prog(`
+    attribute vec3 aPos; attribute vec3 aCol; attribute vec3 aNoise; attribute float aSeed;
+    uniform mat4 uMVP; uniform vec3 uAgent; uniform float uEps, uSpan, uTime, uPx, uSize, uSigma, uFloor;
+    uniform vec3 uBoxLo, uBoxHi;
+    vec3 reflectInto(vec3 p, vec3 lo, vec3 hi){            // fold noise back inside the box walls
+      vec3 L = hi - lo, q = mod(p - lo, 2. * L);
+      return lo + (L - abs(q - L));
+    }
+    varying vec4 vCol; varying float vCross;
+    void main(){
+      float d = distance(aPos.xz, uAgent.xz);
+      float t = clamp((d - uEps) / uSpan, 0., 1.);            // linear in distance
+      float ab = 1. - t * t;                                   // noise level √(1−ᾱ) = t grows linearly with distance
+      vec3 n = aNoise + .12 * vec3(sin(uTime*.45 + aSeed*41.), sin(uTime*.38 + aSeed*73.), cos(uTime*.41 + aSeed*19.));
+      vec3 p;
+      p.xz = aPos.xz + sqrt(1. - ab) * uSigma * n.xz;
+      p.y  = uFloor + sqrt(ab) * (aPos.y - uFloor) + sqrt(1. - ab) * uSigma * .6 * n.y;
+      p = reflectInto(p, uBoxLo, uBoxHi);
+      gl_Position = uMVP * vec4(p, 1.);
+      vCross = (aSeed < .006 && t > .2) ? 1. : 0.;
+      vec3 haze = vec3(.80, .80, .77);
+      vCol = vec4(mix(aCol, haze, t), mix(1., .5, t));
+      if (vCross > .5) vCol = vec4(.08, .08, .08, .75);
+      float sz = vCross > .5 ? 7. * uPx : min(uSize * uPx / gl_Position.w, 4.5 * uPx);
+      gl_PointSize = d < uEps - .02 ? 0. : sz;
+    }`, `
+    precision mediump float; varying vec4 vCol; varying float vCross;
+    void main(){
+      vec2 c = gl_PointCoord - .5;
+      if (vCross > .5) { if (min(abs(c.x), abs(c.y)) > .045) discard; gl_FragColor = vCol; return; }
+      float r = dot(c, c); if (r > .25) discard;
+      gl_FragColor = vec4(vCol.rgb, vCol.a * smoothstep(.25, .1, r));
+    }`);
+  const ptB = { pos: buf(new Float32Array(PP)), col: buf(new Float32Array(PC)), noise: buf(new Float32Array(PN)), seed: buf(new Float32Array(PS)) };
+
+  // thin lines: rings, dreams
+  const lnPg = prog(`
+    attribute vec3 aPos; attribute float aA; uniform mat4 uMVP; varying float vA;
+    void main(){ vA = aA; gl_Position = uMVP * vec4(aPos, 1.); gl_PointSize = 1.; }`, `
+    precision mediump float; uniform vec3 uColor; varying float vA;
+    void main(){ gl_FragColor = vec4(uColor, vA); }`);
+  const LMAX = 6000, lnP = new Float32Array(LMAX * 3), lnA = new Float32Array(LMAX);
+  const lnB = { pos: buf(lnP.byteLength, gl.DYNAMIC_DRAW), a: buf(lnA.byteLength, gl.DYNAMIC_DRAW) };
+  function drawLines(mvp, verts, mode, color) {
+    if (!verts.length) return;
+    verts.forEach((v, i) => { lnP.set(v.slice(0, 3), i * 3); lnA[i] = v[3]; });
+    use(lnPg, [['aPos', lnB.pos, 3], ['aA', lnB.a, 1]]);
+    gl.bindBuffer(gl.ARRAY_BUFFER, lnB.pos); gl.bufferSubData(gl.ARRAY_BUFFER, 0, lnP.subarray(0, verts.length * 3));
+    gl.bindBuffer(gl.ARRAY_BUFFER, lnB.a); gl.bufferSubData(gl.ARRAY_BUFFER, 0, lnA.subarray(0, verts.length));
+    gl.uniformMatrix4fv(lnPg.u.uMVP, false, mvp); gl.uniform3fv(lnPg.u.uColor, color);
+    gl.drawArrays(mode, 0, verts.length);
+  }
+
+  // ---------------------------------------------------------------- camera math
+  function persp(fov, asp, n, f) { const t = 1 / Math.tan(fov / 2);
+    return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (f + n) / (n - f), -1, 0, 0, 2 * f * n / (n - f), 0]; }
+  function lookAt(e, c) {
+    const z = norm(sub(e, c)), x = norm(cross([0, 1, 0], z)), y = cross(z, x), dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1];
+  }
+  function mul(a, b) { const o = new Array(16).fill(0);
+    for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) o[c * 4 + r] += a[k * 4 + r] * b[c * 4 + k]; return o; }
+  function project(m, p) {
+    const x = m[0] * p[0] + m[4] * p[1] + m[8] * p[2] + m[12], y = m[1] * p[0] + m[5] * p[1] + m[9] * p[2] + m[13],
+          w = m[3] * p[0] + m[7] * p[1] + m[11] * p[2] + m[15];
+    return [(x / w + 1) / 2 * W, (1 - y / w) / 2 * H];
+  }
+
+  // ---------------------------------------------------------------- agent + dreams
+  const pathAt = t => {
+    const x = .5 * Math.sin(.21 * t) + .12 * Math.sin(.57 * t + 1), z = .45 * Math.sin(.29 * t + 1.2) + .1 * Math.cos(.43 * t);
+    return [x, hy(x, z) + .03, z];
+  };
+  const DT = 1.8, DN = 7, DK = 48;
+  let dreams = [], dreamIdx = -1, dreamSteps = 0;
+  function makeDreams(t) {
+    const a = pathAt(t), b = pathAt(t + .15), hd = Math.atan2(b[2] - a[2], b[0] - a[0]);
+    dreams = [];
+    for (let n = 0; n < DN; n++) {
+      let th = hd + (n === 0 ? 0 : (rnd() - .5) * 2), x = a[0], z = a[2]; const bend = (rnd() - .5) * .1, pts = [];
+      for (let k = 0; k < DK; k++) { th += bend + (rnd() - .5) * .07; x += Math.cos(th) * .0105; z += Math.sin(th) * .0105;
+        pts.push([x, hy(x, z) + .012, z]); }
+      dreams.push(pts);
+    }
+    dreamSteps += DN * DK;
+  }
+
+  // ---------------------------------------------------------------- interaction
+  let az = .78, el = .6, dragging = false, lx = 0, ly = 0, idle = 0;
+  cv.addEventListener('pointerdown', e => { dragging = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => { if (!dragging) return;
+    az -= (e.clientX - lx) * .005; el = Math.min(1.3, Math.max(.2, el + (e.clientY - ly) * .004)); lx = e.clientX; ly = e.clientY; idle = 0; });
+  addEventListener('pointerup', () => dragging = false);
+  const epsIn = document.getElementById('wm-eps'), epsOut = document.getElementById('wm-epsv');
+  let EPS = +epsIn.value;
+  epsIn.addEventListener('input', () => { EPS = +epsIn.value; epsOut.textContent = EPS.toFixed(2); });
+
+  // ---------------------------------------------------------------- loop
+  const $ = id => document.getElementById(id);
+  const box = $('wm-box'), eq = $('wm-eq');
+  const SPAN = 1.25, SIGMA = .26, BOX_LO = [-1, WATER - .14, -1], BOX_HI = [1, .46, 1];
+  const inBox = (x, z) => Math.abs(x) <= 1 && Math.abs(z) <= 1;
+  const boxEdges = [], grid = [];
+  { const [a, b, c] = BOX_LO, [d, e, f] = BOX_HI, P = [[a,b,c],[d,b,c],[d,b,f],[a,b,f],[a,e,c],[d,e,c],[d,e,f],[a,e,f]];
+    for (const [i, j] of [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]]) boxEdges.push([...P[i], .55], [...P[j], .55]);
+    for (let k = 1; k < 8; k++) { const v = -1 + k * .25;
+      grid.push([v, b, c, .12], [v, b, f, .12], [a, b, v, .12], [d, b, v, .12]); } }
+  let W = 0, H = 0, dpr = 1;
+  function resize() { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; gl.viewport(0, 0, cv.width, cv.height); }
+  addEventListener('resize', resize); resize();
+
+  gl.clearColor(...BG, 1);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.enable(gl.DEPTH_TEST);
+  const start = performance.now(); let last = start, agentT = 0, epsNow = 0;
+
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const time = (now - start) / 1000, intro = Math.min(1, time / 3.2);
+    if (!dragging) { idle += dt; if (idle > 1.5) az += dt * .045; }
+    if (intro >= 1) agentT += dt;
+    epsNow += (EPS * intro * intro * (3 - 2 * intro) - epsNow) * Math.min(1, dt * 6);
+    const agent = pathAt(agentT);
+    if (Math.floor(agentT / DT) !== dreamIdx) { dreamIdx = Math.floor(agentT / DT); makeDreams(agentT); }
+    const age = (agentT % DT) / DT;
+
+    // near-isometric camera: narrow fov, far away
+    const R = 7.7 / Math.min(1, W / H);               // keep the whole box in frame for any aspect
+    const tgt = [agent[0] * .15, .02, agent[2] * .15];
+    const eye = [tgt[0] + R * Math.cos(az) * Math.cos(el), tgt[1] + R * Math.sin(el), tgt[2] + R * Math.sin(az) * Math.cos(el)];
+    const shift = 0;  // (layout handles placement)
+    const mvp = mul([1,0,0,0, 0,1,0,0, 0,0,1,0, shift,0,0,1], mul(persp(.42, W / H, .1, 30), lookAt(eye, tgt)));
+    const px = dpr * Math.max(620, Math.min(W, H)) / 900;
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // 1 · rendered world inside ε
+    use(meshPg, [['aPos', meshB.pos, 3], ['aNor', meshB.nor, 3], ['aCol', meshB.col, 4]]);
+    gl.uniformMatrix4fv(meshPg.u.uMVP, false, mvp);
+    gl.uniform3fv(meshPg.u.uAgent, agent); gl.uniform3fv(meshPg.u.uEye, eye); gl.uniform1f(meshPg.u.uEps, epsNow);
+    gl.drawArrays(gl.TRIANGLES, 0, NVERT);
+
+    // 2 · diffused particles beyond ε
+    use(ptPg, [['aPos', ptB.pos, 3], ['aCol', ptB.col, 3], ['aNoise', ptB.noise, 3], ['aSeed', ptB.seed, 1]]);
+    const U = ptPg.u;
+    gl.uniformMatrix4fv(U.uMVP, false, mvp); gl.uniform3fv(U.uAgent, agent);
+    gl.uniform1f(U.uEps, epsNow); gl.uniform1f(U.uSpan, SPAN); gl.uniform1f(U.uTime, time); gl.uniform1f(U.uPx, px);
+    gl.uniform1f(U.uSize, 24); gl.uniform1f(U.uSigma, SIGMA); gl.uniform1f(U.uFloor, WATER);
+    gl.uniform3fv(U.uBoxLo, BOX_LO); gl.uniform3fv(U.uBoxHi, BOX_HI);
+    gl.drawArrays(gl.POINTS, 0, NPTS);
+
+    // 3 · ink: ε ring (solid, on terrain), ε+Δ ring (dashed, on the water plane), dreams
+    const ring = [], outer = [], RS = 160;
+    for (let k = 0; k <= RS; k++) {
+      const a = k / RS * 6.2832, x = agent[0] + Math.cos(a) * epsNow, z = agent[2] + Math.sin(a) * epsNow;
+      ring.push([Math.max(-1, Math.min(1, x)), hy(x, z) + .004, Math.max(-1, Math.min(1, z)), inBox(x, z) ? .9 : 0]);
+    }
+    for (let k = 0; k < RS; k++) {
+      if (k % 2) continue;
+      for (const kk of [k, k + 1]) { const a = kk / RS * 6.2832, r = epsNow + SPAN;
+        outer.push([agent[0] + Math.cos(a) * r, WATER, agent[2] + Math.sin(a) * r, inBox(agent[0] + Math.cos(a) * r, agent[2] + Math.sin(a) * r) ? .45 : 0]); }
+    }
+    gl.depthMask(false);
+    drawLines(mvp, ring, gl.LINE_STRIP, INK);
+    gl.disable(gl.DEPTH_TEST); drawLines(mvp, outer, gl.LINES, INK); drawLines(mvp, grid, gl.LINES, INK); drawLines(mvp, boxEdges, gl.LINES, INK); gl.enable(gl.DEPTH_TEST);
+    if (intro >= 1) {
+      const reveal = Math.min(DK, Math.floor(age * 2.6 * DK)), fade = Math.min(1, (1 - age) * 2.5);
+      dreams.forEach((pts, i) => {
+        if (reveal < 2) return;
+        const v = pts.slice(0, reveal).map((p, k) => [...p, fade * (i === 0 ? 1 : .55) * (1 - k / DK * .7)]);
+        drawLines(mvp, v, gl.LINE_STRIP, i === 0 ? SLATE : TEAL);
+      });
+    }
+    gl.depthMask(true);
+
+    // 4 · overlay: agent box, leader line, ring labels
+    const [ax, ay] = project(mvp, agent);
+    box.setAttribute('x', ax - 6); box.setAttribute('y', ay - 6);
+    // equation sits just below the lowest projected corner of the box
+    let low = [0, -1e9];
+    for (const x of [BOX_LO[0], BOX_HI[0]]) for (const y of [BOX_LO[1], BOX_HI[1]]) for (const z of [BOX_LO[2], BOX_HI[2]]) {
+      const q = project(mvp, [x, y, z]); if (q[1] > low[1]) low = q; }
+    eq.style.left = Math.max(170, Math.min(W - 170, low[0])) + 'px';
+    eq.style.top = Math.min(H - 82, low[1] + 18) + 'px';
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+/* ---- ⌘F / Ctrl+F find popup ---- edit PAGES to match your site */
+(() => {
+  const PAGES = [
+    { label: 'About',    path: '/about' },
+    { label: 'Research', path: '/research' },
+    { label: 'Projects', path: '/projects' },
+    { label: 'Writing',  path: '/writing' },
+    { label: 'CV',       path: '/cv' },
+    { label: 'Contact',  path: '/contact' },
+  ];
+  const SHORTCUTS = [
+    ['⌘F / Ctrl+F', 'open find'], ['/', 'open find'], ['↑ ↓', 'move'], ['enter', 'visit'],
+    ['?', 'toggle shortcuts'], ['esc', 'close'], ['drag', 'orbit the world'],
+  ];
+  const el = id => document.getElementById(id);
+  const root = el('find'), q = el('find-q'), list = el('find-list');
+  let items = [], sel = 0, help = false, lastFocus = null;
+
+  function render() {
+    list.innerHTML = '';
+    if (help) {
+      SHORTCUTS.forEach(([k, v]) => list.insertAdjacentHTML('beforeend', `<li class="empty"><span style="color:var(--ink)">[${k}]</span><span class="p">${v}</span></li>`));
+      return;
+    }
+    const s = q.value.trim().toLowerCase();
+    items = PAGES.filter(p => !s || p.label.toLowerCase().includes(s) || p.path.includes(s));
+    sel = Math.min(sel, Math.max(0, items.length - 1));
+    if (!items.length) { list.innerHTML = '<li class="empty">No matches</li>'; return; }
+    items.forEach((p, i) => {
+      const li = document.createElement('li');
+      li.className = i === sel ? 'on' : ''; li.setAttribute('role', 'option');
+      li.innerHTML = `<span>${p.label}</span><span class="p">${p.path}</span>`;
+      li.onmouseenter = () => { sel = i; render(); };
+      li.onclick = () => go(p);
+      list.appendChild(li);
+    });
+  }
+  const go = p => { location.href = p.path; };
+  function open() { if (!root.hidden) return; lastFocus = document.activeElement; root.hidden = false; help = false; q.value = ''; sel = 0; render(); q.focus(); }
+  function close() { root.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+
+  addEventListener('keydown', e => {
+    const k = e.key.toLowerCase();
+    if ((e.metaKey || e.ctrlKey) && k === 'f') { e.preventDefault(); root.hidden ? open() : close(); return; }
+    if (root.hidden) {
+      if (k === '/' && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); open(); }
+      return;
+    }
+    if (k === 'escape') { e.preventDefault(); close(); }
+    else if (k === 'arrowdown') { e.preventDefault(); sel = (sel + 1) % Math.max(1, items.length); render(); }
+    else if (k === 'arrowup') { e.preventDefault(); sel = (sel - 1 + items.length) % Math.max(1, items.length); render(); }
+    else if (k === 'enter') { e.preventDefault(); if (!help && items[sel]) go(items[sel]); }
+    else if (e.key === '?') { e.preventDefault(); help = !help; render(); }
+  });
+  q.addEventListener('input', () => { help = false; sel = 0; render(); });
+  el('find-close').onclick = close;
+  el('find-help').onclick = () => { help = !help; render(); q.focus(); };
+  root.addEventListener('mousedown', e => { if (e.target === root) close(); });
+  
+})();
+</script>
+</body>
+</html>

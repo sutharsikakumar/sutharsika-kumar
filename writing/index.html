@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Writing — Sutharsika Kumar</title>
+  <meta name="description" content="Essays and technical write-ups by Sutharsika Kumar.">
+  <link rel="canonical" href="https://sutharsikakumar.org/writing/">
+  <link rel="icon" href="/assets/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sutharsika Kumar">
+  <meta property="og:title" content="Writing — Sutharsika Kumar">
+  <meta property="og:description" content="Essays and technical write-ups by Sutharsika Kumar.">
+  <meta property="og:url" content="https://sutharsikakumar.org/writing/">
+  <meta property="og:image" content="https://sutharsikakumar.org/assets/world-model-fallback.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Writing — Sutharsika Kumar">
+  <meta name="twitter:description" content="Essays and technical write-ups by Sutharsika Kumar.">
+  <meta name="twitter:image" content="https://sutharsikakumar.org/assets/world-model-fallback.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shell.css">
+  <script type="module" src="/assets/shell.js"></script>
+</head>
+<body class="shell-page">
+<a class="skip" href="#content">Skip to content</a>
+<header data-site-header></header>
+<main class="doc" id="content">
+  <h1>Writing</h1>
+  <p class="lede">An oath to writing more. Essays, and some thoughts on technical things.</p>
+  <div class="chips" role="group" aria-label="Filter by tag" data-tag-filters></div>
+  <ul class="rows" data-post-list>
+    <li data-tags="rl technical">
+      <p class="t"><a href="/technicals/grpo-length-bias/">GRPO length bias, same accuracy</a> <span class="tag">rl · technical</span></p>
+      <p class="m">November 2026</p>
+      <p>A toy experiment on the length bias hiding in GRPO: two losses, the same accuracy, differently shaped mistakes.</p>
+    </li>
+    <li data-tags="philosophy general">
+      <p class="t"><a href="/blogs/writing/the-fear-of-trying-and-the-act-of-doing/">The Fear of Trying and the Act of Doing</a> <span class="tag">philosophy · general</span></p>
+      <p class="m">July 2026</p>
+      <p>On becoming a beginner repeatedly, and why the act of doing is what takes us from potential to realization.</p>
+    </li>
+  </ul>
+  <p class="m" data-post-empty hidden>Nothing with that tag yet.</p>
+
+  <h2>books i like</h2>
+  <ul class="rows">
+    <li><em>The Ride of a Lifetime</em> by Bob Iger</li>
+    <li><em>Irrational Exuberance</em> by Robert J. Shiller</li>
+    <li><em>Bringing Down the House</em> by Ben Mezrich</li>
+    <li><em>Americanah</em> by Chimamanda Ngozi Adichie</li>
+  </ul>
+  <script>
+    (function () {
+      var TAGS = ["rl", "philosophy", "general", "technical"];
+      var bar = document.querySelector("[data-tag-filters]"), rows = document.querySelectorAll("[data-post-list] > li"), empty = document.querySelector("[data-post-empty]");
+      var active = new URLSearchParams(location.search).get("tag"); if (TAGS.indexOf(active) === -1) active = "all";
+      function apply() {
+        var shown = 0;
+        rows.forEach(function (r) { var ok = active === "all" || r.getAttribute("data-tags").split(" ").indexOf(active) !== -1; r.hidden = !ok; if (ok) shown++; });
+        empty.hidden = shown !== 0;
+        bar.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-tag") === active ? "true" : "false"); });
+      }
+      ["all"].concat(TAGS).forEach(function (t) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = t; b.setAttribute("data-tag", t);
+        b.addEventListener("click", function () { active = t; apply(); }); bar.appendChild(b);
+      });
+      apply();
+    })();
+  </script>
+</main>
+<footer class="doc-footer" data-site-footer></footer>
+</body>
+</html>
