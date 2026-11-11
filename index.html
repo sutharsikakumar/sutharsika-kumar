@@ -1,76 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sutharsika Kumar</title>
-  <meta name="description" content="A small personal archive — writing, publications, film notes, art, baking, and side quests by Sutharsika Kumar." />
-  <link rel="icon" href="assets/favicon.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <script src="assets/site.js" defer></script>
+  <meta name="description" content="Sutharsika Kumar — ML research on world models and reinforcement learning. About, research, projects, writing and CV.">
+  <link rel="canonical" href="https://sutharsikakumar.org/">
+  <link rel="icon" href="/assets/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sutharsika Kumar">
+  <meta property="og:title" content="Sutharsika Kumar">
+  <meta property="og:description" content="ML research on world models and reinforcement learning.">
+  <meta property="og:url" content="https://sutharsikakumar.org/">
+  <meta property="og:image" content="https://sutharsikakumar.org/assets/world-model-fallback.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sutharsika Kumar">
+  <meta name="twitter:description" content="ML research on world models and reinforcement learning.">
+  <meta name="twitter:image" content="https://sutharsikakumar.org/assets/world-model-fallback.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/shell.css">
+  <link rel="stylesheet" href="/assets/home.css">
+  <script type="module" src="/assets/shell.js"></script>
 </head>
-<body data-crow-page="sidequests">
-  <main class="page">
+<body class="shell-page">
+<a class="skip" href="#main-nav">Skip to navigation</a>
+<main class="page">
+  <section class="wm" id="wm" aria-label="Interactive world-model animation">
+    <img class="poster" src="/assets/world-model-fallback.jpg" width="900" height="900" fetchpriority="high"
+         alt="A square terrain diorama in a thin box: smooth rendered land near a moving agent, dissolving into noisy particles farther away.">
+    <canvas role="img" tabindex="-1" aria-label="3D world in a box: fully rendered within an epsilon neighborhood of a moving agent, diffused into noisy particles beyond it. Drag to orbit."></canvas>
+    <svg class="ov" aria-hidden="true"><rect data-agent-box width="12" height="12" fill="none" stroke="#141414" stroke-width="1"/></svg>
+    <div class="eq" data-eq>
+      x<sub>t</sub> = √ᾱ x<sub>0</sub> + √(1−ᾱ) ε<br>
+      √(1−ᾱ) = clamp((‖x − agent‖ − ε) / Δ, 0, 1)
+      <label class="eps">ε <input data-eps type="range" min="0.14" max="0.85" step="0.01" value="0.38" aria-label="epsilon, radius of the fully rendered neighborhood"><output data-eps-out>0.38</output></label>
+    </div>
+  </section>
 
-    <section class="home">
-      <div class="home-figure">
-        <!-- Portrait self-heals: drop a hand-drawn illustration at assets/portrait.png
-             and it replaces the labelled placeholder automatically. -->
-        <img
-          class="home-portrait"
-          src="assets/portrait.png"
-          alt="Hand-drawn illustration of Sutharsika Kumar"
-          width="230"
-          onerror="this.style.display='none';document.getElementById('portrait-fallback').setAttribute('data-active','');"
-        />
-        <div class="home-portrait-fallback" id="portrait-fallback" aria-hidden="true">
-          <span class="hpf-label">Illustrated portrait</span>
-          <span class="hpf-path">add: assets/portrait.png</span>
-        </div>
-      </div>
+  <div class="side">
+    <h1 class="name">Sutharsika Kumar</h1>
+    <nav class="tabs" id="main-nav" data-nav aria-label="Sections"></nav>
+    <noscript><p style="font:14px var(--s-mono)"><a href="/about/">/About</a> <a href="/research/">/Research</a> <a href="/projects/">/Projects</a> <a href="/writing/">/Writing</a> <a href="/cv/">/CV</a></p></noscript>
+  </div>
 
-      <div class="home-intro">
-        <h1 class="home-name">Sutharsika Kumar</h1>
-        <div class="home-bio">
-          <p>Hey, I’m Sutharsika, and I love trying new things. Naturally, that has led me to explore various hobbies and topics. This is a small collection of my work.</p>
-          <p>I’m currently working on reinforcement learning policy, when language models can serve as policy optimizers, and on developing an autonomous robotic laboratory, advised by Dr. Haozhe Wang at Duke. The lab work builds on <a href="https://arxiv.org/abs/2608.26701">Co-Scientist</a>, a Gemini-based system that plans experiments and drives real laboratory equipment in closed loop. Previously, I collaborated with researchers at Duke, MIT, and Google DeepMind on ATOMIC, a zero-shot autonomous microscopy framework for 2D materials. Feel free to reach out at <a href="mailto:sutharsika.kumar07@gmail.com">sutharsika.kumar07@gmail.com</a>.</p>
-        </div>
-      </div>
-    </section>
+  <footer data-site-footer></footer>
+</main>
 
-    <nav class="nav" aria-label="Sections">
-      <a class="btn" href="publications/index.html">Publications</a>
-
-      <a class="btn" href="blogs/writing/index.html">Writing</a>
-
-      <div class="nav-sidequests">
-        <div class="nav-group">
-          <button class="btn" type="button" aria-expanded="false" aria-haspopup="true">Side-Quests</button>
-          <ul class="nav-menu">
-            <li><a href="side-quests/artwork/index.html">Artwork</a></li>
-            <li><a href="side-quests/baking/index.html">Baking</a></li>
-            <li><a href="side-quests/photography/index.html">Photography</a></li>
-          </ul>
-        </div>
-
-        <!-- Interactive crow companion — perched beside Side-Quests -->
-        <div class="crow-host">
-          <button
-            class="crow crow--inline"
-            data-crow
-            type="button"
-            aria-describedby="crow-bubble"
-            aria-expanded="false"
-            aria-label="A curious crow. Activate to hear what it has to say."
-          >
-            <img src="assets/crow.png" alt="" width="54" />
-          </button>
-          <div class="crow-bubble crow-bubble--inline" id="crow-bubble" data-crow-bubble role="status" aria-live="polite"></div>
-        </div>
-      </div>
-    </nav>
-
-    <footer class="footer-links" data-footer></footer>
-  </main>
+<script type="module">
+  // Don't block first paint: the poster is visible immediately; the scene initialises after load, when idle.
+  const start = async () => {
+    const root = document.getElementById('wm');
+    try {
+      const { mountWorldModel } = await import('/assets/world-model.js');
+      const dispose = await mountWorldModel(root);          // null → WebGL unavailable → poster stays
+      if (dispose) addEventListener('pagehide', dispose, { once: true });
+    } catch (e) { /* scene failed to build: the static poster remains */ }
+  };
+  const later = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 200));
+  document.readyState === 'complete' ? later() : addEventListener('load', later, { once: true });
+</script>
 </body>
 </html>

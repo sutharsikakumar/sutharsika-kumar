@@ -1,0 +1,29 @@
+/* home.css — homepage layout: animation left, name + tabs right, footer bottom of right column. */
+.page { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr); grid-template-rows:1fr auto; grid-template-areas:"wm side" "wm foot"; min-height:100vh; }
+.wm { grid-area:wm; position:relative; height:100vh; min-height:520px; overflow:hidden; }
+.wm canvas { position:absolute; inset:0; width:100%; height:100%; cursor:grab; touch-action:none; }
+.wm canvas:active { cursor:grabbing; }
+.wm .poster { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; }
+.wm.is-live .poster { display:none; }
+.wm svg.ov { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; }
+.wm:not(.is-live) svg.ov, .wm:not(.is-live) .eq { visibility:hidden; }
+.wm .eq { position:absolute; font-family:var(--s-mono); font-size:12.5px; line-height:1.7; color:var(--s-ink); white-space:nowrap; pointer-events:none; text-align:center; transform:translateX(-50%); }
+.wm .eq sub { font-size:.75em; }
+.wm .eps { display:flex; justify-content:center; align-items:center; gap:10px; margin-top:10px; pointer-events:auto; }
+.wm .eps input { -webkit-appearance:none; appearance:none; width:150px; height:1px; background:var(--s-ink); outline:none; margin:0; }
+.wm .eps input::-webkit-slider-thumb { -webkit-appearance:none; width:9px; height:9px; background:var(--s-bg); border:1px solid var(--s-ink); cursor:pointer; }
+.wm .eps input::-moz-range-thumb { width:8px; height:8px; border-radius:0; background:var(--s-bg); border:1px solid var(--s-ink); cursor:pointer; }
+.wm .eps input:focus-visible { outline:1px solid var(--s-ink); outline-offset:6px; }
+.wm .eps output { min-width:32px; text-align:left; }
+.side { grid-area:side; display:flex; flex-direction:column; justify-content:center; padding:0 clamp(24px,5vw,80px) 0 clamp(8px,2vw,24px); }
+.side .name { font-family:var(--s-serif); font-weight:400; font-size:clamp(34px,3.6vw,52px); letter-spacing:-.01em; line-height:1.05; margin:0 0 36px; }
+.page > .site-footer { grid-area:foot; padding:0 clamp(24px,5vw,80px) 28px clamp(8px,2vw,24px); }
+
+@media (max-width:800px) {
+  .page { grid-template-columns:1fr; grid-template-rows:auto auto auto; grid-template-areas:"side" "wm" "foot"; min-height:0; }
+  .side { padding:40px 24px 0; justify-content:flex-start; }
+  .side .name { margin-bottom:18px; }
+  .tabs { flex-direction:row; flex-wrap:wrap; gap:8px 18px; }
+  .wm { height:58vh; min-height:400px; }
+  .page > .site-footer { padding:16px 24px 28px; }
+}
