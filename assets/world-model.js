@@ -342,7 +342,11 @@ export async function mountWorldModel(root) {
       grid.push([v, b, c, .12], [v, b, f, .12], [a, b, v, .12], [d, b, v, .12]); } }
   let W = 0, H = 0, dpr = 1;
   function resize() { dpr = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight;
-    cv.width = Math.max(1, W * dpr); cv.height = Math.max(1, H * dpr); gl.viewport(0, 0, cv.width, cv.height); requestDraw(); }
+    const bw = Math.max(1, Math.round(W * dpr)), bh = Math.max(1, Math.round(H * dpr));
+    if (bw !== cv.width || bh !== cv.height) { cv.width = bw; cv.height = bh; }
+    gl.viewport(0, 0, cv.width, cv.height);
+    if (!disposed && W && H) frame(performance.now());   // repaint now so a resized buffer never shows stale/uninitialised pixels
+    requestDraw(); }
 
   gl.clearColor(...BG, 1);
   gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.enable(gl.DEPTH_TEST);
@@ -435,6 +439,8 @@ export async function mountWorldModel(root) {
   const onLost = e => { e.preventDefault(); root.classList.remove('is-live'); onScreen = false; };
   document.addEventListener('visibilitychange', onVis);
   cv.addEventListener('webglcontextlost', onLost);
+  const ro = new ResizeObserver(resize);          // fires on any layout change (sidebar toggle, fonts, window resize), not just window resize
+  ro.observe(cv);
   window.addEventListener('resize', resize);
   io.observe(root);
   resize(); kick(); requestDraw();
@@ -442,7 +448,7 @@ export async function mountWorldModel(root) {
   return function dispose() {
     disposed = true;
     cancelAnimationFrame(raf); raf = 0;
-    io.disconnect();
+    io.disconnect(); ro.disconnect();
     document.removeEventListener('visibilitychange', onVis);
     window.removeEventListener('resize', resize);
     window.removeEventListener('pointerup', onUp); window.removeEventListener('pointercancel', onUp);
