@@ -49,7 +49,7 @@
 </main>
 
 <script type="module">
-  // Don't block first paint: the poster is visible immediately; the scene initialises after load, when idle.
+  // The poster is visible immediately; the scene builds in yielding chunks and fades in over it.
   const start = async () => {
     const root = document.getElementById('wm');
     try {
@@ -58,8 +58,7 @@
       if (dispose) addEventListener('pagehide', dispose, { once: true });
     } catch (e) { /* scene failed to build: the static poster remains */ }
   };
-  const later = () => ('requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 200));
-  document.readyState === 'complete' ? later() : addEventListener('load', later, { once: true });
+  start();   // begin building immediately (it yields between chunks); waiting for load + idle left the poster frozen for seconds
 </script>
 </body>
 </html>
