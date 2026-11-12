@@ -87,3 +87,16 @@
 .social { display:flex; gap:16px; align-items:center; }
 .social a { display:inline-flex; color:var(--s-mute); text-decoration:none; }
 .social a:hover, .social a:focus-visible { color:var(--s-ink); }
+
+/* about: secondary, smaller text */
+.doc .aside { font-size:15px; line-height:1.6; color:var(--s-ink); }
+.doc .aside p { margin:12px 0 0; }
+.doc .aside .k { color:var(--s-mute); }
+.doc .aside p.k { margin-top:20px; }
+.doc .aside ul { list-style:none; margin:6px 0 0; padding:0; }
+.doc .aside li { padding:2px 0; }
+.doc .aside .closing { margin-top:20px; font-style:italic; color:var(--s-mute); }
+
+/* writing list: title + (date) */
+.doc ul.posts > li { padding:10px 0; border-bottom:0; }
+.doc ul.posts .date { color:var(--s-mute); margin-left:.35em; }

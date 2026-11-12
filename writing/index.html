@@ -27,20 +27,11 @@
 <a class="skip" href="#content">Skip to content</a>
 <header data-site-header></header>
 <main class="doc" id="content">
-  <div class="chips" role="group" aria-label="Filter by tag" data-tag-filters></div>
-  <ul class="rows" data-post-list>
-    <li data-tags="rl technical">
-      <p class="t"><a href="/technicals/grpo-length-bias/">GRPO length bias, same accuracy</a> <span class="tag">rl · technical</span></p>
-      <p class="m">November 2026</p>
-      <p>A toy experiment on the length bias hiding in GRPO: two losses, the same accuracy, differently shaped mistakes.</p>
-    </li>
-    <li data-tags="philosophy general">
-      <p class="t"><a href="/blogs/writing/the-fear-of-trying-and-the-act-of-doing/">The Fear of Trying and the Act of Doing</a> <span class="tag">philosophy · general</span></p>
-      <p class="m">July 2026</p>
-      <p>On becoming a beginner repeatedly, and why the act of doing is what takes us from potential to realization.</p>
-    </li>
+  <h2>my writing</h2>
+  <ul class="rows posts">
+    <li><a href="/technicals/grpo-length-bias/">GRPO length bias, same accuracy</a> <span class="date">(November 2026)</span></li>
+    <li><a href="/blogs/writing/the-fear-of-trying-and-the-act-of-doing/">The Fear of Trying and the Act of Doing</a> <span class="date">(July 2026)</span></li>
   </ul>
-  <p class="m" data-post-empty hidden>Nothing with that tag yet.</p>
 
   <h2>books i like</h2>
   <ul class="rows">
@@ -49,24 +40,6 @@
     <li><em>Bringing Down the House</em> by Ben Mezrich</li>
     <li><em>Americanah</em> by Chimamanda Ngozi Adichie</li>
   </ul>
-  <script>
-    (function () {
-      var TAGS = ["rl", "philosophy", "general", "technical"];
-      var bar = document.querySelector("[data-tag-filters]"), rows = document.querySelectorAll("[data-post-list] > li"), empty = document.querySelector("[data-post-empty]");
-      var active = new URLSearchParams(location.search).get("tag"); if (TAGS.indexOf(active) === -1) active = "all";
-      function apply() {
-        var shown = 0;
-        rows.forEach(function (r) { var ok = active === "all" || r.getAttribute("data-tags").split(" ").indexOf(active) !== -1; r.hidden = !ok; if (ok) shown++; });
-        empty.hidden = shown !== 0;
-        bar.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-tag") === active ? "true" : "false"); });
-      }
-      ["all"].concat(TAGS).forEach(function (t) {
-        var b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = t; b.setAttribute("data-tag", t);
-        b.addEventListener("click", function () { active = t; apply(); }); bar.appendChild(b);
-      });
-      apply();
-    })();
-  </script>
 </main>
 </body>
 </html>
