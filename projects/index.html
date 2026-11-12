@@ -27,41 +27,16 @@
 <a class="skip" href="#content">Skip to content</a>
 <header data-site-header></header>
 <main class="doc" id="content">
-  <div class="subtabs" role="tablist" aria-label="Technical sections">
-    <a href="#research-papers" role="tab" data-tab="research-papers">/Research Papers</a>
-    <a href="#projects" role="tab" data-tab="projects">/Projects</a>
-    <a href="#open-source" role="tab" data-tab="open-source">/Open Source</a>
-  </div>
-
-  <section id="research-papers" class="tabpanel" role="tabpanel">
-    <ul class="rows">
+  <h2>Research Papers</h2>
+  <ul class="rows">
       <li><p class="t"><a href="https://drive.google.com/file/d/1c2-NYRVCpJ5dJ17QDVtHeBafu-DMlI34/view?usp=sharing">A Case Study of LLM-Assisted Raman Spectral Analysis and Elo-Based Benchmarking for 2D Materials</a> · <span class="venue">Under review</span></p></li>
       <li><p class="t"><a href="https://pubs.acs.org/doi/abs/10.1021/acsnano.5c09057">Zero-Shot Autonomous Microscopy for Scalable and Intelligent Characterization of 2D Materials</a> · <span class="venue">ACS Nano</span></p></li>
       <li><p class="t"><a href="https://arxiv.org/abs/2501.07760">Band Structure Modeling of Perovskite Materials with Quantum ESPRESSO for Multijunction Photovoltaic Cell Optimization</a> · <span class="venue">arXiv pre-print</span></p></li>
     </ul>
-  </section>
 
-  <section id="projects" class="tabpanel" role="tabpanel" hidden>
-  </section>
+  <h2>Projects</h2>
 
-  <section id="open-source" class="tabpanel" role="tabpanel" hidden>
-  </section>
-
-  <script>
-    (function () {
-      var ids = ["research-papers", "projects", "open-source"];
-      function show() {
-        var id = location.hash.slice(1); if (ids.indexOf(id) === -1) id = ids[0];
-        ids.forEach(function (i) { document.getElementById(i).hidden = i !== id; });
-        document.querySelectorAll(".subtabs a").forEach(function (a) {
-          var on = a.getAttribute("data-tab") === id;
-          a.setAttribute("aria-selected", on ? "true" : "false");
-          if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
-        });
-      }
-      window.addEventListener("hashchange", show); show();
-    })();
-  </script>
+  <h2>Open Source</h2>
 </main>
 </body>
 </html>
