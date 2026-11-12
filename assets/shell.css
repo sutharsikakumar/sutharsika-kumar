@@ -39,6 +39,14 @@
 .doc .m strong { color:var(--s-ink); font-weight:400; }
 .doc .m a { color:var(--s-mute); }
 .doc .m a:hover { color:var(--s-ink); }
+.doc ul.bullets { margin:0; padding-left:1.2em; }
+.doc ul.bullets > li { padding:8px 0; }
+.doc ul.bullets > li::marker { color:var(--s-mute); }
+.doc ul.bullets > li { display:list-item; }
+.doc ul.bullets > li > span { display:inline; }
+.doc ul.bullets .stack { color:var(--s-mute); }
+.doc ul.bullets .gh { float:right; margin:4px 0 0 16px; color:var(--s-mute); text-decoration:none; line-height:0; }
+.doc ul.bullets .gh:hover { color:var(--s-ink); }
 .doc .row-head { display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; }
 .doc .tag { color:var(--s-mute); }
 .doc .todo { color:var(--s-mute); font-style:italic; }

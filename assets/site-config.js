@@ -10,11 +10,11 @@ export const SITE = {
 
 // `nav: true` → shown as a tab (homepage + inner-page header). Every entry is searchable in the find popup.
 export const PAGES = [
-  { label: 'About',    path: '/about/',    nav: true, description: 'Bio, education, what I am working toward' },
-  { label: 'Research', path: '/research/', nav: true, description: 'Interests, publications, ongoing work' },
-  { label: 'Projects', path: '/projects/', nav: true, description: 'Things I have built' },
-  { label: 'Writing',  path: '/writing/',  nav: true, description: 'Essays and technical write-ups' },
-  { label: 'CV',       path: '/cv/',       nav: true, description: 'Education, experience, publications' },
+  { label: 'About',      path: '/about/',    nav: true, description: 'Bio, education, what I am working toward' },
+  { label: 'Technical',  path: '/projects/', nav: true, description: 'Things I have built' },
+  { label: 'Writing',    path: '/writing/',  nav: true, description: 'Essays and technical write-ups' },
+  { label: 'Past Lives', path: '/cv/',       nav: true, description: 'Education, experience, publications' },
+  { label: 'Research',   path: '/research/', description: 'Interests, publications, ongoing work' },
   { label: 'Home',     path: '/',          description: 'World-model animation' },
   { label: 'Artwork',     path: '/side-quests/artwork/',     description: 'Side quests: drawings' },
   { label: 'Baking',      path: '/side-quests/baking/',      description: 'Side quests: baking' },
