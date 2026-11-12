@@ -27,6 +27,36 @@
 <a class="skip" href="#content">Skip to content</a>
 <header data-site-header></header>
 <main class="doc" id="content">
+  <div class="subtabs" role="tablist" aria-label="Technical sections">
+    <a href="#research-papers" role="tab" data-tab="research-papers">/research papers</a>
+    <a href="#projects" role="tab" data-tab="projects">/projects</a>
+    <a href="#open-source" role="tab" data-tab="open-source">/open source</a>
+  </div>
+
+  <section id="research-papers" class="tabpanel" role="tabpanel">
+    <ul class="rows">
+      <li>
+        <p class="t">A Case Study of LLM-Assisted Raman Spectral Analysis and Elo-Based Benchmarking for 2D Materials</p>
+        <p class="m"><strong>Sutharsika Kumar</strong> (1st author), Jingyun Yang, Dongwoo Suh, et al.</p>
+        <p class="m"><em>Under review</em>, 2025.</p>
+        <p class="m"><a href="https://drive.google.com/file/d/1c2-NYRVCpJ5dJ17QDVtHeBafu-DMlI34/view?usp=sharing">Paper</a> · <a href="https://github.com/sutharsikakumar/raman-arena">Code</a></p>
+      </li>
+      <li>
+        <p class="t">Zero-Shot Autonomous Microscopy for Scalable and Intelligent Characterization of 2D Materials</p>
+        <p class="m"><strong>Sutharsika Kumar</strong> (7th author), Jingyun Yang, Ruoyan Avery Yin, et al.</p>
+        <p class="m"><em>ACS Nano</em>, 2025.</p>
+        <p class="m"><a href="https://pubs.acs.org/doi/abs/10.1021/acsnano.5c09057">Paper</a> · <a href="https://arxiv.org/abs/2504.10281">arXiv</a></p>
+      </li>
+      <li>
+        <p class="t">Band Structure Modeling of Perovskite Materials with Quantum ESPRESSO for Multijunction Photovoltaic Cell Optimization</p>
+        <p class="m"><strong>Sutharsika Kumar</strong> (sole author)</p>
+        <p class="m"><em>arXiv pre-print</em>, 2025.</p>
+        <p class="m"><a href="https://arxiv.org/pdf/2501.07760">Paper</a> · <a href="https://arxiv.org/abs/2501.07760">arXiv</a></p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="projects" class="tabpanel" role="tabpanel" hidden>
   <ul class="bullets">
     <li>
       <a class="gh" href="https://github.com/sutharsikakumar/grpo-length-bias" target="_blank" rel="noopener noreferrer" aria-label="GRPO length bias on GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
@@ -61,9 +91,27 @@
       <span><strong>tac-countdown</strong> <span class="stack">(JavaScript)</span>: A countdown game.</span>
     </li>
   </ul>
+  </section>
 
-  <h2>open source</h2>
-  <p><span class="todo">TODO(sutharsika): no pull requests to other people’s repos were found via GitHub; add contributions here.</span></p>
+  <section id="open-source" class="tabpanel" role="tabpanel" hidden>
+    <p><span class="todo">TODO(sutharsika): no pull requests to other people’s repos were found via GitHub; add contributions here.</span></p>
+  </section>
+
+  <script>
+    (function () {
+      var ids = ["research-papers", "projects", "open-source"];
+      function show() {
+        var id = location.hash.slice(1); if (ids.indexOf(id) === -1) id = ids[0];
+        ids.forEach(function (i) { document.getElementById(i).hidden = i !== id; });
+        document.querySelectorAll(".subtabs a").forEach(function (a) {
+          var on = a.getAttribute("data-tab") === id;
+          a.setAttribute("aria-selected", on ? "true" : "false");
+          if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+        });
+      }
+      window.addEventListener("hashchange", show); show();
+    })();
+  </script>
 </main>
 </body>
 </html>

@@ -100,3 +100,9 @@
 /* writing list: title + (date) */
 .doc ul.posts > li { padding:10px 0; border-bottom:0; }
 .doc ul.posts .date { color:var(--s-mute); margin-left:.35em; }
+
+/* technical: in-page tabs */
+.subtabs { display:flex; flex-wrap:wrap; gap:8px 28px; margin:0 0 32px; font-size:18px; }
+.subtabs a { color:var(--s-mute); text-decoration:none; }
+.subtabs a:hover, .subtabs a[aria-selected="true"] { color:var(--s-ink); }
+.tabpanel[hidden] { display:none; }
