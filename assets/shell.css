@@ -25,13 +25,14 @@
 .doc { max-width:760px; margin:0 auto; padding:72px 24px 24px; font-size:18px; line-height:1.6; }
 .doc h1 { font:400 clamp(30px,5vw,40px)/1.1 var(--s-serif); letter-spacing:-.01em; margin:0 0 12px; }
 .doc .lede { color:var(--s-mute); margin:0 0 48px; }
-.doc h2 { font:400 15px var(--s-mono); color:var(--s-mute); text-transform:lowercase; letter-spacing:.04em; margin:48px 0 0; padding-bottom:8px; border-bottom:1px solid var(--s-hair); }
+.doc h2 { font:400 15px var(--s-mono); color:var(--s-mute); text-transform:lowercase; letter-spacing:.04em; margin:48px 0 0; }
 .doc h2::before { content:"/"; margin-right:.15em; }
 .doc p { margin:16px 0 0; }
 .doc a { color:var(--s-ink); text-decoration:underline; text-decoration-color:var(--s-hair); text-underline-offset:3px; }
 .doc a:hover { text-decoration-color:var(--s-ink); }
-.doc ul.rows { list-style:none; margin:0; padding:0; }
-.doc ul.rows > li { padding:18px 0; border-bottom:1px solid var(--s-hair); }
+.doc ul.rows { list-style:disc; margin:0; padding:0 0 0 1.2em; }
+.doc ul.rows > li { padding:8px 0; }
+.doc ul.rows > li::marker { color:var(--s-mute); }
 .doc .t { margin:0; }
 .doc .t a { text-decoration:none; }
 .doc .t a:hover { text-decoration:underline; }
