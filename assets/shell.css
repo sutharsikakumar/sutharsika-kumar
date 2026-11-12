@@ -141,3 +141,9 @@
 #research-papers ul { list-style:disc; padding-left:1.3em; }
 #research-papers li::marker { content:normal; color:var(--s-mute); }
 #research-papers li { display:list-item; padding:8px 0; border-bottom:0; }
+
+/* writing: compact lists */
+.doc ul.tight { margin:14px 0 0; padding-left:1.2em; list-style:disc; }
+.doc ul.tight > li { padding:3px 0; border-bottom:0; display:list-item; }
+.doc ul.tight > li::marker { color:var(--s-mute); }
+.doc ul.tight p { margin:0; }
