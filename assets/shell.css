@@ -79,8 +79,6 @@
 .find__ft button { color:var(--s-mute); margin-left:28px; }
 .find__ft button:hover, .find__ft button:focus-visible { color:var(--s-ink); }
 .find__close { margin-top:clamp(40px,14vh,140px); color:var(--s-ink); }
-@media (prefers-reduced-motion: no-preference) { .find:not([hidden]) { animation:find-in .12s ease-out; } }
-@keyframes find-in { from { opacity:0; } }
 .site-footer-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 40px; }
 
 /* social icons */
@@ -147,23 +145,3 @@
 .doc ul.tight > li { padding:3px 0; border-bottom:0; display:list-item; }
 .doc ul.tight > li::marker { color:var(--s-mute); }
 .doc ul.tight p { margin:0; }
-
-/* ------------------------------------------------------------------ *
- * Minimal motion: soft fade-up on load, gentle hovers. Off for reduced motion.
- * ------------------------------------------------------------------ */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
-  @keyframes fade { from { opacity:0; } to { opacity:1; } }
-
-  .site-hdr { animation:fade .5s ease both; }
-  .doc > * { animation:rise .6s cubic-bezier(.2,.7,.2,1) both; }
-  .doc > :nth-child(1) { animation-delay:.04s; } .doc > :nth-child(2) { animation-delay:.09s; }
-  .doc > :nth-child(3) { animation-delay:.14s; } .doc > :nth-child(4) { animation-delay:.19s; }
-  .doc > :nth-child(5) { animation-delay:.24s; } .doc > :nth-child(n+6) { animation-delay:.28s; }
-  .tabpanel:not([hidden]) { animation:rise .45s cubic-bezier(.2,.7,.2,1) both; }
-
-  .tabs a, .subtabs a, .site-hdr a, .doc a, .social a, .find li { transition:color .2s ease, text-decoration-color .2s ease, transform .2s ease; }
-  .tabs a:hover, .tabs a:focus-visible { transform:translateX(3px); }
-  .subtabs a:hover { transform:translateY(-1px); }
-  .social a:hover, .social a:focus-visible { transform:translateY(-2px); }
-}
