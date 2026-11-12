@@ -106,3 +106,33 @@
 .subtabs a { color:var(--s-mute); text-decoration:none; }
 .subtabs a:hover, .subtabs a[aria-selected="true"] { color:var(--s-ink); }
 .tabpanel[hidden] { display:none; }
+
+.doc .venue { color:var(--s-mute); font-style:italic; }
+
+/* technical tabs: no bullets */
+.tabpanel ul, .doc ul.bullets { list-style:none; padding-left:0; }
+.tabpanel li::marker, .doc ul.bullets > li::marker { content:""; }
+.doc ul.bullets > li { display:block; }
+
+/* blog posts */
+.doc.post { max-width:760px; }
+.doc.post .post-header { margin-bottom:40px; }
+.doc.post h1 { margin:0 0 6px; }
+.doc.post .post-body { font-size:18px; line-height:1.6; }
+.doc.post .post-body p { margin:0 0 20px; }
+.doc.post .post-body h2 { font:400 24px/1.25 var(--s-serif); color:var(--s-ink); text-transform:none; letter-spacing:-.005em; border:0; margin:44px 0 14px; padding:0; }
+.doc.post .post-body h2::before { content:none; }
+.doc.post .post-body ul, .doc.post .post-body ol { margin:0 0 20px; padding-left:1.3em; }
+.doc.post .post-body ul { list-style:disc; } .doc.post .post-body ol { list-style:decimal; }
+.doc.post .post-body blockquote { margin:28px 0; padding:0 0 0 20px; border-left:1px solid var(--s-hair); color:var(--s-mute); font-style:italic; }
+.doc.post .post-body blockquote p { margin:0 0 8px; }
+.doc.post .post-body blockquote cite { display:block; font-style:normal; font-size:15px; }
+.doc.post .post-body a { color:var(--s-ink); text-decoration:underline; text-decoration-color:var(--s-hair); text-underline-offset:3px; }
+.doc.post .post-body a:hover { text-decoration-color:var(--s-ink); }
+.doc.post .post-figure { margin:32px 0; }
+.doc.post .post-figure img { display:block; width:100%; height:auto; }
+.doc.post .post-figure figcaption { margin-top:10px; font-size:15px; color:var(--s-mute); text-align:center; }
+.doc.post .katex-display { overflow-x:auto; overflow-y:hidden; }
+.doc.post .post-nav { margin-top:56px; padding-top:20px; border-top:1px solid var(--s-hair); font-size:16px; }
+.doc.post .post-nav a { color:var(--s-mute); text-decoration:none; }
+.doc.post .post-nav a:hover { color:var(--s-ink); }
