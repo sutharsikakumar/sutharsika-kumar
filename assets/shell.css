@@ -148,7 +148,8 @@
 
 
 /* technical: papers at body size, wrap to two lines, tight within a paper, roomy between */
-.doc ul.oneline > li { padding:0; margin:0 0 20px; line-height:1.4; }
+.doc ul.oneline { margin-top:18px; }
+.doc ul.oneline > li { padding:0; margin:0 0 30px; line-height:1.5; }
 .doc ul.oneline > li:last-child { margin-bottom:0; }
 
 /* past lives: more breathing room */
