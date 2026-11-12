@@ -5,7 +5,7 @@
   --s-serif:"Newsreader",Georgia,"Times New Roman",serif;
   --s-mono:"Newsreader",Georgia,"Times New Roman",serif;  /* name kept; everything is Newsreader now */
 }
-.shell-page { margin:0; background:var(--s-bg); color:var(--s-ink); font-family:var(--s-mono); }
+.shell-page { margin:0; background:var(--s-bg); color:var(--s-ink); font-family:var(--s-mono); font-feature-settings:"kern" 1; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 .shell-page button { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
 .skip { position:absolute; left:-999px; top:8px; background:var(--s-ink); color:var(--s-bg); padding:6px 10px; font:13px var(--s-mono); z-index:100; }
 .skip:focus { left:8px; }
