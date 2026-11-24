@@ -164,3 +164,11 @@
 
 /* every heading on every page uses the section-header green (the homepage name stays black) */
 :is(h1,h2,h3,h4,h5,h6):not(.name) { color:var(--s-head); }
+
+/* past lives: label and list on one line */
+.doc .aside.roomy p.oneline-k { margin-top:0; }
+
+/* Text scale: on laptop and desktop screens, inner pages and the homepage name/tabs render at
+   what used to be 150% browser zoom. Phones keep the base size. The animation is not scaled. */
+@media (min-width:900px)  { .site-hdr, .doc, .side { zoom:1.25; } .side .name { white-space:nowrap; } }
+@media (min-width:1200px) { .site-hdr, .doc { zoom:1.5; } }   /* homepage side column stays at 1.25 so the name fits on one line */
