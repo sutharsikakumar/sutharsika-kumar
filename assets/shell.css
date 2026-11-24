@@ -1,6 +1,6 @@
 /* shell.css — shared by every page: palette, tabs, inner-page layout, footer, find popup. */
 :root {
-  --s-bg:#fcfcfa; --s-ink:#141414; --s-mute:#8d8d88; --s-hair:#d9d9d4;
+  --s-bg:#fcfcfa; --s-ink:#141414; --s-mute:#141414; --s-hair:#d9d9d4; --s-head:#2f6b50;  /* section headers: darker shade of the site teal */
   --s-slate:#474d64; --s-teal:#509777; --s-green:#6fb16f; --s-lime:#dad881; --s-cream:#efeeba;
   --s-serif:"Newsreader",Georgia,"Times New Roman",serif;
   --s-mono:"Newsreader",Georgia,"Times New Roman",serif;  /* name kept; everything is Newsreader now */
@@ -16,7 +16,7 @@
 .tabs { display:flex; flex-direction:column; gap:12px; font-family:var(--s-mono); font-size:16px; }
 .tabs a { color:var(--s-ink); text-decoration:none; width:max-content; }
 .tabs a::before { content:"/"; color:var(--s-mute); margin-right:.15em; }
-.tabs a:hover, .tabs a[aria-current] { color:var(--s-mute); }
+.tabs a:hover, .tabs a[aria-current] { text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px; }  /* all text is black, so state shows as an underline */
 .tabs--row { flex-direction:row; flex-wrap:wrap; gap:6px 18px; font-size:13px; }
 
 /* inner pages */
@@ -25,10 +25,10 @@
 .doc { max-width:760px; margin:0 auto; padding:64px 24px 24px; font-size:15px; line-height:1.6; }
 .doc h1 { font:400 clamp(26px,4vw,32px)/1.1 var(--s-serif); letter-spacing:-.01em; margin:0 0 12px; }
 .doc .lede { color:var(--s-mute); margin:0 0 48px; }
-.doc h2 { font:400 13px var(--s-mono); color:var(--s-mute); letter-spacing:.02em; margin:48px 0 0; }
+.doc h2 { font:400 13px var(--s-mono); color:var(--s-head); letter-spacing:.02em; margin:48px 0 0; }
 .doc h2::before { content:"/"; margin-right:.15em; }
 .doc p { margin:16px 0 0; }
-.doc a { color:var(--s-ink); text-decoration:underline; text-decoration-color:var(--s-hair); text-underline-offset:3px; }
+.doc a { color:var(--s-ink); text-decoration:underline; text-decoration-color:currentColor; text-underline-offset:3px; }
 .doc a:hover { text-decoration-color:var(--s-ink); }
 .doc ul.rows { list-style:disc; margin:0; padding:0 0 0 1.2em; }
 .doc ul.rows > li { padding:8px 0; }
@@ -118,14 +118,14 @@
 .doc.post h1 { margin:0 0 6px; }
 .doc.post .post-body { font-size:15px; line-height:1.6; }
 .doc.post .post-body p { margin:0 0 20px; }
-.doc.post .post-body h2 { font:400 20px/1.25 var(--s-serif); color:var(--s-ink); text-transform:none; letter-spacing:-.005em; border:0; margin:44px 0 14px; padding:0; }
+.doc.post .post-body h2 { font:400 20px/1.25 var(--s-serif); color:var(--s-head); text-transform:none; letter-spacing:-.005em; border:0; margin:44px 0 14px; padding:0; }
 .doc.post .post-body h2::before { content:none; }
 .doc.post .post-body ul, .doc.post .post-body ol { margin:0 0 20px; padding-left:1.3em; }
 .doc.post .post-body ul { list-style:disc; } .doc.post .post-body ol { list-style:decimal; }
 .doc.post .post-body blockquote { margin:28px 0; padding:0 0 0 20px; border-left:1px solid var(--s-hair); color:var(--s-mute); font-style:italic; }
 .doc.post .post-body blockquote p { margin:0 0 8px; }
 .doc.post .post-body blockquote cite { display:block; font-style:normal; font-size:13px; }
-.doc.post .post-body a { color:var(--s-ink); text-decoration:underline; text-decoration-color:var(--s-hair); text-underline-offset:3px; }
+.doc.post .post-body a { color:var(--s-ink); text-decoration:underline; text-decoration-color:currentColor; text-underline-offset:3px; }
 .doc.post .post-body a:hover { text-decoration-color:var(--s-ink); }
 .doc.post .post-figure { margin:32px 0; }
 .doc.post .post-figure img { display:block; width:100%; height:auto; }
@@ -160,3 +160,6 @@
 .doc .aside.roomy li { padding:4px 0; }
 .doc .aside.roomy p.note { margin-top:34px; }
 .doc ul.oneline .venue { white-space:nowrap; }
+
+/* every heading on every page uses the section-header green (the homepage name stays black) */
+:is(h1,h2,h3,h4,h5,h6):not(.name) { color:var(--s-head); }

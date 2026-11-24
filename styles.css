@@ -46,8 +46,8 @@
   --bg-elevated:   #f0efe9;  /* search bar, headers, hovered rows */
   --surface:       #f6f5f0;  /* off-white: drawers, bubbles, white pills */
   --ink:           #1a1a17;  /* near-black text */
-  --ink-muted:     #6b6b62;  /* metadata, captions */
-  --ink-faint:     #9a9a90;  /* placeholders, disabled */
+  --ink-muted:     #1a1a17;  /* metadata, captions */
+  --ink-faint:     #1a1a17;  /* placeholders, disabled */
   --line:          #d2d1c8;  /* thin dividers / understated borders */
   --line-soft:     #dddcd3;
   --line-strong:   #bcbbb0;
