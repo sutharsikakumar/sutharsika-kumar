@@ -17,15 +17,15 @@
 .tabs a { color:var(--s-ink); text-decoration:none; width:max-content; }
 .tabs a::before { content:"/"; color:var(--s-mute); margin-right:.15em; }
 .tabs a:hover, .tabs a[aria-current] { text-decoration:underline; text-underline-offset:4px; text-decoration-thickness:1px; }  /* all text is black, so state shows as an underline */
-.tabs--row { flex-direction:row; flex-wrap:wrap; gap:6px 18px; font-size:13px; }
+.tabs--row { flex-direction:row; flex-wrap:wrap; gap:6px 18px; font-size:14px; }
 
 /* inner pages */
 .site-hdr { max-width:760px; margin:0 auto; padding:32px 24px 0; display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:12px 32px; }
 .site-hdr__name { font-family:var(--s-serif); font-size:22px; letter-spacing:-.01em; color:var(--s-ink); text-decoration:none; }
-.doc { max-width:760px; margin:0 auto; padding:64px 24px 24px; font-size:15px; line-height:1.6; }
+.doc { max-width:760px; margin:0 auto; padding:64px 24px 24px; font-size:16px; line-height:1.6; }
 .doc h1 { font:400 clamp(26px,4vw,32px)/1.1 var(--s-serif); letter-spacing:-.01em; margin:0 0 12px; }
 .doc .lede { color:var(--s-mute); margin:0 0 48px; }
-.doc h2 { font:400 13px var(--s-mono); color:var(--s-head); letter-spacing:.02em; margin:48px 0 0; }
+.doc h2 { font:400 14px var(--s-mono); color:var(--s-head); letter-spacing:.02em; margin:48px 0 0; }
 .doc h2::before { content:"/"; margin-right:.15em; }
 .doc p { margin:16px 0 0; }
 .doc a { color:var(--s-ink); text-decoration:underline; text-decoration-color:currentColor; text-underline-offset:3px; }
@@ -36,6 +36,7 @@
 .doc .t { margin:0; }
 .doc .t a { text-decoration:none; }
 .doc .t a:hover { text-decoration:underline; }
+.doc .t a.code { text-decoration:underline; }
 .doc .m { margin:2px 0 0; color:var(--s-mute); }
 .doc .m strong { color:var(--s-ink); font-weight:400; }
 .doc .m a { color:var(--s-mute); }
@@ -87,7 +88,7 @@
 .social a:hover, .social a:focus-visible { color:var(--s-ink); }
 
 /* about: secondary, smaller text */
-.doc .aside { font-size:14px; line-height:1.6; color:var(--s-ink); }
+.doc .aside { font-size:15px; line-height:1.6; color:var(--s-ink); }
 .doc .aside p { margin:12px 0 0; }
 .doc .aside .k { color:var(--s-mute); }
 .doc .aside p.k { margin-top:20px; }
@@ -116,7 +117,7 @@
 .doc.post { max-width:760px; }
 .doc.post .post-header { margin-bottom:40px; }
 .doc.post h1 { margin:0 0 6px; }
-.doc.post .post-body { font-size:15px; line-height:1.6; }
+.doc.post .post-body { font-size:16px; line-height:1.6; }
 .doc.post .post-body p { margin:0 0 20px; }
 .doc.post .post-body h2 { font:400 20px/1.25 var(--s-serif); color:var(--s-head); text-transform:none; letter-spacing:-.005em; border:0; margin:44px 0 14px; padding:0; }
 .doc.post .post-body h2::before { content:none; }
